@@ -1,27 +1,28 @@
 "use client";
+import { useEffect, useRef } from 'react';
 import Aurora from './Aurora';
 import CountUp from './CountUp';
-
-// Placeholder for Lanyard until migrated
-const Lanyard = ({ position, gravity }: { position: number[], gravity: number[] }) => (
-    <div className="w-full h-[400px] bg-zinc-900/10 rounded-2xl border border-dashed border-zinc-500/20 flex items-center justify-center text-zinc-500 font-mono text-sm">
-        Lanyard Component Coming Soon
-    </div>
-);
+import Lanyard from './Lanyard';
 
 export default function Hero() {
     return (
-        <section className="min-h-screen flex items-center bg-bg pt-[84px] relative overflow-hidden">
+        <section className="min-h-screen flex items-center bg-bg pt-28.75 pb-16 sm:pb-25 relative overflow-hidden">
 
-            {/* Aurora background */}
-            <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.55] [mask-image:linear-gradient(to_bottom,transparent_0%,black_25%,black_70%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,black_25%,black_70%,transparent_100%)]">
+            <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.55] mask-[linear-gradient(to_bottom,transparent_0%,black_25%,black_70%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,black_25%,black_70%,transparent_100%)]">
                 <Aurora colorStops={['#00e5d0', '#0ea5e9', '#00e5d0']} blend={0.7} amplitude={0.2} speed={0.4} />
             </div>
 
-            <div className="max-w-[1100px] mx-auto px-6 relative z-[1] flex items-center justify-between gap-8 sm:gap-12 flex-wrap pt-10 pb-10 sm:pb-15">
+            {/* Lanyard — only shown on xl+ screens */}
+            <div className="hidden xl:block absolute top-0 bottom-0 right-[max(2rem,calc((100vw-1100px)/2))] w-[460px] 2xl:w-[520px] z-[1] overflow-hidden pointer-events-auto">
+                <div className="absolute inset-x-0 top-0 h-full">
+                    <Lanyard position={[0, 0, 17]} gravity={[0, -40, 0]} />
+                </div>
+            </div>
 
-                {/* Left: content */}
-                <div className="flex-1 min-w-0 sm:min-w-[280px]">
+            {/* Content — on xl, constrain width to avoid overlapping lanyard */}
+            <div className="max-w-[1100px] mx-auto px-6 relative z-[2] w-full sm:py-25 pointer-events-none">
+                <div className="w-full xl:max-w-[580px] xl:pr-8 pointer-events-auto">
+
                     <span className="font-mono text-[0.72rem] font-medium tracking-[0.14em] uppercase text-accent block animate-[fadeUp_0.5s_ease_both] [animation-delay:0.05s]">Hi, my name is</span>
 
                     <div className="animate-[fadeUp_0.5s_ease_both] [animation-delay:0.13s]">
@@ -43,6 +44,7 @@ export default function Hero() {
                         </a>
                         , focused on building scalable, real-world applications.
                     </p>
+
                     <div className="flex items-center gap-1.5 pb-3 flex-wrap">
                         <a href="#contact" className="inline-flex items-center gap-2 font-text text-sm font-medium tracking-[-0.008em] py-[11px] px-6 rounded-full cursor-pointer transition-[opacity,border-color] duration-180 whitespace-nowrap bg-accent border border-none text-bg hover:border-line-hover">
                             Get In Touch
@@ -74,12 +76,6 @@ export default function Hero() {
                         </div>
                     </div>
                 </div>
-
-                {/* Right: Lanyard */}
-                <div className="animate-[fadeUp_0.5s_ease_both] [animation-delay:0.28s] flex-1 min-w-0 sm:min-w-[280px] hidden md:flex items-center justify-center">
-                    <Lanyard position={[0, 0, 16]} gravity={[0, -40, 0]} />
-                </div>
-
             </div>
         </section>
     );
