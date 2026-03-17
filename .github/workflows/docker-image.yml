@@ -2,7 +2,13 @@ name: Build and Push Docker Image
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
+    paths-ignore:
+      - README.md
+      - .github/**
+      - '*.md'
+      - eslint.config.mjs
 
 jobs:
   build:
