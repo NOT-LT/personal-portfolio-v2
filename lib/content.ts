@@ -71,7 +71,7 @@ export interface ProjectsContent {
 export interface Socials {
     github: string;
     linkedin: string;
-    twitter: string;
+    instagram: string;
 }
 
 export interface ContactContent {

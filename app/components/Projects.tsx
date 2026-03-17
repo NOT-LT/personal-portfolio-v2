@@ -80,7 +80,7 @@ export default function Projects({ content }: { content: ProjectsContent }) {
                     <div className="overflow-hidden">
                         <div
                             ref={trackRef}
-                            className="flex gap-4 transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]"
+                            className="flex gap-4 transition-transform duration-500 ease-in-out"
                             style={{ transform: `translateX(-${offset * cardStep}px)` }}
                         >
                             {projects.map((p) => (

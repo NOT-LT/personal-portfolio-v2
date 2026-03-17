@@ -13,7 +13,7 @@ export default function Navbar() {
 
     return (
         <>
-            <nav className={`fixed left-1/2 -translate-x-1/2 z-100 w-[calc(100%-48px)] bg-surface/60 backdrop-blur-lg border border-line rounded-full transition-[top,height,max-width] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] ${scrolled ? 'top-2 h-10 max-w-[480px]' : 'top-4 h-13 max-w-(--max-w)'}`}>
+            <nav className={`fixed left-1/2 -translate-x-1/2 z-100 w-[calc(100%-48px)] bg-surface/60 backdrop-blur-lg border border-line rounded-full transition-[top,height,max-width] duration-300 ease-in-out ${scrolled ? 'top-2 h-10 max-w-120' : 'top-4 h-13 max-w-(--max-w)'}`}>
                 <div className="px-5 h-full flex items-center justify-between relative">
                     <a href="#" className="text-fg hover:text-accent transition-colors duration-180 ml-1">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 258 258" fill="currentColor" className={`transition-[width,height] duration-300 ${scrolled ? 'w-7 h-7' : 'w-8 h-8'}`}>
@@ -35,12 +35,12 @@ export default function Navbar() {
                     {/* Hamburger button */}
                     <button
                         onClick={() => setOpen(!open)}
-                        className="sm:hidden flex flex-col justify-center items-center w-8 h-8 gap-[5px] text-fg"
+                        className="sm:hidden flex flex-col justify-center items-center w-8 h-8 gap-1.25 text-fg"
                         aria-label="Toggle menu"
                     >
-                        <span className={`block h-px w-5 bg-current transition-all duration-200 origin-center ${open ? "rotate-45 translate-y-[7px]" : ""}`} />
+                        <span className={`block h-px w-5 bg-current transition-all duration-200 origin-center ${open ? "rotate-45 translate-y-1.75" : ""}`} />
                         <span className={`block h-px w-5 bg-current transition-all duration-200 ${open ? "opacity-0" : ""}`} />
-                        <span className={`block h-px w-5 bg-current transition-all duration-200 origin-center ${open ? "-rotate-45 -translate-y-[7px]" : ""}`} />
+                        <span className={`block h-px w-5 bg-current transition-all duration-200 origin-center ${open ? "-rotate-45 -translate-y-1.75" : ""}`} />
                     </button>
                 </div>
             </nav>

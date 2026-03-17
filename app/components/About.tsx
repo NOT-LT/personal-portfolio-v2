@@ -99,7 +99,7 @@ export default function About({ content }: { content: AboutContent }) {
                                 {skills.map(s => (
                                     <span
                                         key={s}
-                                        className="bg-surface border border-line text-muted font-mono text-[0.68rem] px-3.5 py-1.5 rounded-[4px] transition-all duration-200 hover:border-accent/40 hover:text-fg hover:-translate-y-[1px]"
+                                        className="bg-surface border border-line text-muted font-mono text-[0.68rem] px-3.5 py-1.5 rounded-sm transition-all duration-200 hover:border-accent/40 hover:text-fg hover:-translate-y-px"
                                     >
                                         {s}
                                     </span>
