@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, ReactNode } from 'react';
+import { useState, useEffect, useRef, ReactNode } from 'react';
 import SpotlightCard from './SpotlightCard';
 
 interface Project {
@@ -7,7 +7,8 @@ interface Project {
     title: string;
     desc: string;
     tags: string[];
-    links: string[];
+    github?: string;
+    external?: string;
 }
 
 const PROJECTS: Project[] = [
@@ -18,10 +19,22 @@ const PROJECTS: Project[] = [
                 <polyline points="9 22 9 12 15 12 15 22" />
             </svg>
         ),
-        title: 'Property Marketplace System',
-        desc: 'Three-layer Java application for property listing and user account management. UUID-based authentication, Bahraini phone validation, and RFC-compliant email regex.',
-        tags: ['Java', 'OOP', '3-Layer Architecture'],
-        links: ['github', 'external'],
+        title: 'Nestify',
+        desc: 'A comprehensive property marketplace system that seamlessly connects property seekers with providers. Features advanced search, real-time listings, and an intuitive dashboard.',
+        tags: ['Node.js', 'Express', 'MongoDB', 'Cloudinary', 'EJS'],
+        github: '',
+        external: '',
+    },
+    {
+        icon: (
+            <svg width="26" height="26" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+            </svg>
+        ),
+        title: 'Rapid JS',
+        desc: 'Custom lightweight, reactive front-end framework featuring a virtual DOM, reactive state management, and an elegant component lifecycle system.',
+        tags: ['JavaScript', 'Virtual DOM', 'State Management', 'Event Handling', 'Component Management'],
+        github: '',
     },
     {
         icon: (
@@ -32,21 +45,46 @@ const PROJECTS: Project[] = [
         ),
         title: 'Facial Emotion Detection CNN',
         desc: 'EfficientNetB2 transfer learning on FER2013 with Mixup augmentation, cosine annealing, and live webcam inference. 7-class emotion classification at ≤15M parameters.',
-        tags: ['Python', 'TensorFlow', 'CNN'],
-        links: ['github'],
+        tags: ['Python', 'TensorFlow', 'Keras', 'CNN', 'CV2', 'Face detection'],
+        github: '',
     },
     {
         icon: (
             <svg width="26" height="26" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-                <rect x="2" y="3" width="20" height="14" rx="2" />
-                <line x1="8" y1="21" x2="16" y2="21" />
-                <line x1="12" y1="17" x2="12" y2="21" />
+                <rect x="2" y="4" width="20" height="16" rx="2" />
+                <path d="M7 15l5-5 5 5" />
             </svg>
         ),
-        title: 'Home Media Server',
-        desc: 'Ubuntu Server on HP Pavilion hosting Jellyfin, Radarr, Sonarr, Prowlarr, and qBittorrent via Docker/Portainer. Secured with Cloudflare Tunnels, no exposed ports.',
-        tags: ['Docker', 'Linux', 'Cloudflare'],
-        links: ['external'],
+        title: 'Movie Recommendation System',
+        desc: 'Intelligent system leveraging collaborative filtering and content-based approaches on the MovieLens 1M dataset to deliver personalized suggestions.',
+        tags: ['Python', 'Machine Learning', 'Pandas', 'Scikit-learn', 'Collaborative Filtering'],
+        github: '',
+    },
+    {
+        icon: (
+            <svg width="26" height="26" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
+                <polyline points="9 12 12 15 15 12" />
+                <line x1="12" y1="8" x2="12" y2="15" />
+            </svg>
+        ),
+        title: 'Instagram Media Downloader',
+        desc: 'Self-hosted Instagram DM bot that lets users download posts and stories by sharing them to the bot or mentioning it in comments. Deployed via Docker with a persistent SQLite store.',
+        tags: ['C#', 'Instagram API', 'Bot', 'Docker', 'SQLite'],
+        github: 'https://github.com/NOT-LT/Instagram-MediaDownloader',
+    },
+    {
+        icon: (
+            <svg width="26" height="26" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                <path d="M2 22l5.5-5.5" />
+                <path d="M16.5 3.5a2.12 2.12 0 013 3L7.5 18.5l-4.5 1 1-4.5 12.5-12.5z" />
+                <path d="M15 5l4 4" />
+            </svg>
+        ),
+        title: 'Delta Color Picker',
+        desc: 'Lightweight Windows desktop tool for capturing the exact color of any pixel on screen. Trigger via button or ALT+X shortcut and instantly get the RGB and HEX values.',
+        tags: ['C#', 'WPF', 'MVVM', 'Color Theory', 'Desktop App'],
+        github: 'https://github.com/NOT-LT/DeltaColorPicker',
     },
 ];
 
@@ -56,14 +94,55 @@ const GithubIcon = () => (
     </svg>
 );
 
-const ExternalIcon = () => (
+// const ExternalIcon = () => (
+//     <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+//         <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3" />
+//     </svg>
+// );
+
+const ChevronLeft = () => (
     <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3" />
+        <path d="M15 18l-6-6 6-6" />
+    </svg>
+);
+
+const ChevronRight = () => (
+    <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+        <path d="M9 18l6-6-6-6" />
     </svg>
 );
 
 export default function Projects() {
+    const [offset, setOffset] = useState(0);
+    const [visible, setVisible] = useState(3);
+    const [cardStep, setCardStep] = useState(0);
+    const trackRef = useRef<HTMLDivElement>(null);
     const sectionRef = useRef<HTMLElement>(null);
+
+    useEffect(() => {
+        const update = () => {
+            if (window.matchMedia('(min-width: 1024px)').matches) setVisible(3);
+            else if (window.matchMedia('(min-width: 640px)').matches) setVisible(2);
+            else setVisible(1);
+        };
+        update();
+        window.addEventListener('resize', update);
+        return () => window.removeEventListener('resize', update);
+    }, []);
+
+    useEffect(() => {
+        const measure = () => {
+            const first = trackRef.current?.children[0] as HTMLElement | null;
+            if (first) setCardStep(first.offsetWidth + 16);
+        };
+        measure();
+        window.addEventListener('resize', measure);
+        return () => window.removeEventListener('resize', measure);
+    }, []);
+
+    useEffect(() => {
+        setOffset(prev => Math.min(prev, Math.max(0, PROJECTS.length - visible)));
+    }, [visible]);
 
     useEffect(() => {
         const io = new IntersectionObserver(
@@ -73,6 +152,8 @@ export default function Projects() {
         sectionRef.current?.querySelectorAll('.reveal').forEach(el => io.observe(el));
         return () => io.disconnect();
     }, []);
+
+    const maxOffset = Math.max(0, PROJECTS.length - visible);
 
     return (
         <section id="projects" className="py-16 sm:py-25 bg-bg-secondary" ref={sectionRef}>
@@ -84,37 +165,104 @@ export default function Projects() {
                     <div className="w-7 h-0.5 bg-accent rounded-[1px] mt-3.5" />
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {PROJECTS.map((p, i) => (
-                        <SpotlightCard
-                            key={i}
-                            className="group reveal opacity-0 translate-y-4.5 transition-[opacity,transform,border-color] duration-550 [&.in]:opacity-100 [&.in]:translate-y-0 bg-surface border border-line rounded-[10px] hover:border-line-accent"
-                            spotlightColor="rgba(0, 229, 208, 0.08)"
+                <div className="reveal opacity-0 translate-y-4.5 transition-[opacity,transform] duration-550 [&.in]:opacity-100 [&.in]:translate-y-0">
+                    <div className="overflow-hidden">
+                        <div
+                            ref={trackRef}
+                            className="flex gap-4 transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]"
+                            style={{ transform: `translateX(-${offset * cardStep}px)` }}
                         >
-                            <div className="relative z-[1] p-7 flex flex-col gap-4 h-full">
-                                <div className="flex justify-between items-start">
-                                    <span className="text-accent opacity-80">{p.icon}</span>
-                                    <div className="flex gap-3.5">
-                                        {p.links.includes('github') && (
-                                            <a href="#" aria-label="GitHub" className="text-dim hover:text-muted transition-colors duration-180"><GithubIcon /></a>
-                                        )}
-                                        {p.links.includes('external') && (
-                                            <a href="#" aria-label="External link" className="text-dim hover:text-muted transition-colors duration-180"><ExternalIcon /></a>
-                                        )}
+                            {PROJECTS.map((p) => (
+                                <SpotlightCard
+                                    key={p.title}
+                                    className="shrink-0 w-full sm:w-[calc(50%-8px)] lg:w-[calc(33.333%-10.667px)] group bg-surface border border-line rounded-[10px] hover:border-line-accent transition-[border-color] duration-550"
+                                    spotlightColor="rgba(0, 229, 208, 0.08)"
+                                >
+                                    {/* ... keep existing card content */}
+                                    <div className="relative z-[1] p-7 flex flex-col gap-4 h-full">
+                                        <div className="flex justify-between items-start">
+                                            <span className="text-accent opacity-80">{p.icon}</span>
+                                            <div className="flex gap-3.5">
+                                                {p.github !== undefined && (
+                                                    <a
+                                                        href={p.github || '#'}
+                                                        target={p.github ? '_blank' : undefined}
+                                                        rel="noreferrer"
+                                                        aria-label="GitHub"
+                                                        className="text-dim hover:text-muted transition-colors duration-180"
+                                                    >
+                                                        <GithubIcon />
+                                                    </a>
+                                                )}
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div className="font-display text-base font-semibold tracking-[-0.014em] text-fg leading-[1.4] mb-2">{p.title}</div>
+                                            <p className="text-[0.875rem] leading-[1.7] text-muted">{p.desc}</p>
+                                        </div>
+                                        <div className="flex flex-wrap gap-2 mt-auto">
+                                            {p.tags.map(t => (
+                                                <span key={t} className="font-mono text-[0.65rem] tracking-[0.04em] text-accent/80 border border-accent/20 px-2 py-0.5 rounded-full">{t}</span>
+                                            ))}
+                                        </div>
                                     </div>
-                                </div>
-                                <div>
-                                    <div className="font-display text-base font-semibold tracking-[-0.014em] text-fg leading-[1.4] mb-2">{p.title}</div>
-                                    <p className="text-[0.875rem] leading-[1.7] text-muted">{p.desc}</p>
-                                </div>
-                                <div className="flex flex-wrap gap-2 mt-auto">
-                                    {p.tags.map(t => (
-                                        <span key={t} className="font-mono text-[0.65rem] tracking-[0.04em] text-accent/80 border border-accent/20 px-2 py-0.5 rounded-full">{t}</span>
-                                    ))}
-                                </div>
+                                </SpotlightCard>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Pagination Controls */}
+                    {maxOffset > 0 && (
+                        <div className="mt-10 flex items-center justify-center gap-4">
+                            <button
+                                onClick={() => setOffset(o => Math.max(0, o - 1))}
+                                disabled={offset === 0}
+                                className="w-9 h-9 rounded-full border border-dim flex items-center justify-center text-dim hover:border-accent hover:text-accent transition-[color,border-color] duration-200 disabled:opacity-25 disabled:pointer-events-none"
+                            >
+                                <ChevronLeft />
+                            </button>
+
+                            <div className="flex gap-2">
+                                {Array.from({ length: maxOffset + 1 }).map((_, i) => (
+                                    <button
+                                        key={i}
+                                        onClick={() => setOffset(i)}
+                                        className={[
+                                            'rounded-full transition-[width,background-color] duration-250',
+                                            i === offset ? 'w-4 h-1.5 bg-accent' : 'w-1.5 h-1.5 bg-dim hover:bg-muted',
+                                        ].join(' ')}
+                                    />
+                                ))}
                             </div>
-                        </SpotlightCard>
-                    ))}
+
+                            <button
+                                onClick={() => setOffset(o => Math.min(maxOffset, o + 1))}
+                                disabled={offset === maxOffset}
+                                className="w-9 h-9 rounded-full border border-dim flex items-center justify-center text-dim hover:border-accent hover:text-accent transition-[color,border-color] duration-200 disabled:opacity-25 disabled:pointer-events-none"
+                            >
+                                <ChevronRight />
+                            </button>
+                        </div>
+                    )}
+
+                    {/* View More on GitHub Link */}
+                    <div className="mt-16 flex justify-center">
+                        <a
+                            href="https://github.com/NOT-LT"
+                            target="_blank"
+                            rel="noreferrer"
+                            className="group flex items-center gap-2.5 font-mono text-[0.72rem] font-medium tracking-[0.14em] uppercase text-dim hover:text-accent transition-colors duration-200"
+                        >
+                            <span className="relative">
+                                View more on GitHub
+                                <span className="absolute -bottom-1 left-0 w-0 h-px bg-accent transition-[width] duration-300 group-hover:w-full" />
+                            </span>
+                            <span className="transition-transform duration-300 group-hover:translate-x-1">
+                                <GithubIcon />
+                            </span>
+                        </a>
+                    </div>
+
                 </div>
             </div>
         </section>

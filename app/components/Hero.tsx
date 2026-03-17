@@ -1,7 +1,5 @@
 "use client";
-import { useEffect, useRef } from 'react';
 import Aurora from './Aurora';
-import CountUp from './CountUp';
 import Lanyard from './Lanyard';
 
 export default function Hero() {
