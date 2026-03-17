@@ -4,16 +4,25 @@ import { useState, useEffect } from "react";
 export default function Navbar() {
     const [open, setOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
+    const [isPageLoaded, setIsPageLoaded] = useState(false);
 
     useEffect(() => {
         const onScroll = () => setScrolled(window.scrollY > 24);
         window.addEventListener('scroll', onScroll, { passive: true });
-        return () => window.removeEventListener('scroll', onScroll);
+
+        const loadTimer = window.setTimeout(() => {
+            setIsPageLoaded(true);
+        }, 100);
+
+        return () => {
+            window.removeEventListener('scroll', onScroll);
+            window.clearTimeout(loadTimer);
+        };
     }, []);
 
     return (
         <>
-            <nav className={`fixed left-1/2 -translate-x-1/2 z-100 w-[calc(100%-48px)] bg-surface/60 backdrop-blur-lg border border-line rounded-full transition-[top,height,max-width] duration-300 ease-in-out ${scrolled ? 'top-2 h-10 max-w-120' : 'top-4 h-13 max-w-(--max-w)'}`}>
+            <nav className={`fixed left-1/2 -translate-x-1/2 z-100 w-[calc(100%-48px)] bg-surface/60 backdrop-blur-lg border border-line rounded-full transition-all duration-700 ease-out ${scrolled ? 'top-2 h-10 max-w-120' : 'top-4 h-13 max-w-(--max-w)'} ${isPageLoaded ? 'opacity-100 translate-y-0 blur-0 scale-100' : 'opacity-0 -translate-y-8 blur-sm scale-95'}`}>
                 <div className="px-3 h-full flex items-center justify-between relative">
                     <a href="#" className="text-fg hover:text-accent transition-colors duration-180 ml-0">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 258 258" fill="currentColor" className={`transition-[width,height] duration-300 ${scrolled ? 'w-7 h-7' : 'w-8 h-8'}`}>
