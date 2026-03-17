@@ -7,6 +7,8 @@ interface SpotlightCardProps {
     spotlightColor?: string;
 }
 
+
+
 export default function SpotlightCard({
     children,
     className = '',
@@ -21,11 +23,17 @@ export default function SpotlightCard({
         divRef.current.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
         divRef.current.style.setProperty('--spotlight-color', spotlightColor);
     }
+    function handleMouseLeave() {
+        if (!divRef.current) return;
+        divRef.current.style.setProperty('--mouse-x', '-9999px');
+        divRef.current.style.setProperty('--mouse-y', '-9999px');
+    }
 
     return (
         <div
             ref={divRef}
             onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
             className={`relative overflow-hidden ${className}`}
         >
             <div
