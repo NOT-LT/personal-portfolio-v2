@@ -89,7 +89,7 @@ export default function Projects({ content }: { content: ProjectsContent }) {
                                     className="shrink-0 w-full sm:w-[calc(50%-8px)] lg:w-[calc(33.333%-10.667px)] group bg-surface border border-line rounded-[10px] hover:border-line-accent transition-[border-color] duration-550"
                                     spotlightColor="rgba(0, 229, 208, 0.08)"
                                 >
-                                    <div className="relative z-[1] p-7 flex flex-col gap-4 h-full">
+                                    <div className="relative z-1 p-7 flex flex-col gap-4 h-full">
                                         <div className="flex justify-between items-start">
                                             <span
                                                 className="text-accent opacity-80"

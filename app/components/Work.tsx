@@ -46,11 +46,11 @@ export default function Work({ content }: { content: WorkContent }) {
                 </div>
 
                 <div className="reveal opacity-0 translate-y-4.5 transition-[opacity,transform] duration-550 [&.in]:opacity-100 [&.in]:translate-y-0 flex flex-col sm:flex-row">
-                    <div className="sm:w-[220px] shrink-0 sm:self-start sm:border-l border-dim">
+                    <div className="sm:w-55 shrink-0 sm:self-start sm:border-l border-dim">
                         <div className="relative font-display flex sm:flex-col gap-2 sm:gap-0 overflow-x-auto pb-4 sm:pb-0 no-scrollbar">
                             {/* Sliding active indicator — desktop only */}
                             <div
-                                className="hidden sm:block absolute left-0 w-px bg-accent pointer-events-none transition-transform duration-250 ease-[cubic-bezier(0.4,0,0.2,1)]"
+                                className="hidden sm:block absolute left-0 w-px bg-accent pointer-events-none transition-transform duration-250 ease-in-out"
                                 style={{
                                     height: `${100 / sortedJobs.length}%`,
                                     transform: `translateY(${active * 100}%)`,
@@ -75,7 +75,7 @@ export default function Work({ content }: { content: WorkContent }) {
                         </div>
                     </div>
 
-                    <div className="flex-1 pt-6 sm:pt-0 sm:pl-12 min-w-0 min-h-[320px]">
+                    <div className="flex-1 pt-6 sm:pt-0 sm:pl-12 min-w-0 min-h-80">
                         <div key={animKey} className="animate-[fadeSlide_0.35s_ease_both]">
                             <div className="font-display text-[1rem] font-semibold tracking-[-0.015em] text-fg">
                                 {job.title}
@@ -106,7 +106,7 @@ export default function Work({ content }: { content: WorkContent }) {
                             <ul className="flex flex-col gap-3">
                                 {job.bullets.map((b, i) => (
                                     <li key={i} className="flex gap-3 text-[0.9rem] leading-[1.7] text-muted">
-                                        <span className="text-accent shrink-0 mt-[3px] text-[0.7rem]">▸</span>
+                                        <span className="text-accent shrink-0 mt-0.75 text-[0.7rem]">▸</span>
                                         <span>{b}</span>
                                     </li>
                                 ))}

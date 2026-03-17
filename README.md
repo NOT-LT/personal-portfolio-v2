@@ -1,6 +1,6 @@
 # Taha Almohamed - Personal Portfolio
 
-This is my personal portfolio website, where I showcase my journey as a Software Engineering student at the [University of Bahrain](https://www.uob.edu.bh), my professional experience, and the innovative software solutions I've built.
+This is my personal portfolio website, where I showcase my journey as a SWE.
 
 🌐 **Live Demo:** [taljamri.com](https://taljamri.com)
 

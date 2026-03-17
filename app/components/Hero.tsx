@@ -82,7 +82,7 @@ export default function Hero({ content }: { content: HeroContent }) {
                                     alt={name}
                                     width={200}
                                     height={256}
-                                    className="w-[200px] h-[256px] rounded-full bg-white object-cover object-top"
+                                    className="w-50 h-64 rounded-full bg-white object-cover object-top"
                                 />
                             </div>
                         )}
@@ -99,7 +99,7 @@ export default function Hero({ content }: { content: HeroContent }) {
                                     alt={name}
                                     width={200}
                                     height={252}
-                                    className="w-[200px] h-[252px] rounded-full bg-white object-cover object-top"
+                                    className="w-50 h-63 rounded-full bg-white object-cover object-top"
                                 />
                             </div>
                         )}

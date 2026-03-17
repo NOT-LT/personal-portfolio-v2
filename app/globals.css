@@ -140,7 +140,7 @@
 
   .link-underline::after {
     content: "";
-    @apply absolute left-0 bottom-[5px] h-[0.5px] w-full scale-x-0 origin-left bg-accent transition-transform duration-300;
+    @apply absolute left-0 bottom-1.25 h-[0.5px] w-full scale-x-0 origin-left bg-accent transition-transform duration-300;
   }
 
   .link-underline:hover::after {
