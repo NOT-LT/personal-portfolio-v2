@@ -62,7 +62,7 @@ export default function Navbar() {
                             className="hidden sm:flex items-center justify-center w-8 h-8 rounded-full text-muted hover:text-fg hover:bg-surface-2 transition-all duration-300 hover:scale-110 active:scale-95"
                             aria-label="Toggle theme"
                         >
-                            <div className="relative w-[18px] h-[18px]">
+                            <div className="relative w-4.5 h-4.5">
                                 <svg
                                     width="18"
                                     height="18"
@@ -108,7 +108,7 @@ export default function Navbar() {
             </nav>
 
             {/* Mobile dropdown */}
-            <div className={`sm:hidden fixed left-1/2 -translate-x-1/2 z-99 w-[calc(100%-48px)] bg-surface/90 backdrop-blur-lg border border-line rounded-2xl overflow-hidden transition-all duration-300 ${scrolled ? 'top-[54px]' : 'top-20'} ${open ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2 pointer-events-none"}`}>
+            <div className={`sm:hidden fixed left-1/2 -translate-x-1/2 z-99 w-[calc(100%-48px)] bg-surface/90 backdrop-blur-lg border border-line rounded-2xl overflow-hidden transition-all duration-300 ${scrolled ? 'top-13.5' : 'top-20'} ${open ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2 pointer-events-none"}`}>
                 <ul className="flex flex-col list-none p-2">
                     <li><a href="#about" onClick={() => setOpen(false)} className="block px-4 py-3 text-sm text-muted hover:text-fg hover:bg-surface-2 rounded-xl transition-colors duration-180">About</a></li>
                     <li><a href="#work" onClick={() => setOpen(false)} className="block px-4 py-3 text-sm text-muted hover:text-fg hover:bg-surface-2 rounded-xl transition-colors duration-180">Work</a></li>

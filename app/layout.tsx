@@ -1,5 +1,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 if (typeof window !== 'undefined' && process.env.NODE_ENV === 'production') {
   console.warn = () => { }
@@ -53,6 +54,7 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const gaId = process.env.NEXT_PUBLIC_GA_ID;
   return (
     <html lang="en">
       <body>
@@ -75,6 +77,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }}
         />
         {children}
+        {gaId ? <GoogleAnalytics gaId={gaId} /> : null}
       </body>
     </html>
   );
