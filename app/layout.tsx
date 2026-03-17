@@ -1,6 +1,10 @@
 import "./globals.css";
 import type { Metadata } from "next";
 
+if (typeof window !== 'undefined' && process.env.NODE_ENV === 'production') {
+  console.warn = () => { }
+}
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://taljamri.com"),
   title: {
@@ -12,15 +16,18 @@ export const metadata: Metadata = {
     "Taha Almohamed",
     "Taha Al-Mohamed",
     "Taha Aljamri",
-    "Taha Al-jamri",
+    "Taha Al-Jamri",
     "Software Engineer Bahrain",
     "Next.js Developer",
     "AI Engineer",
     "Full Stack Developer",
-    "React Devloper",
-    "Software Developer"
+    "React Developer",
+    "Software Developer",
   ],
   authors: [{ name: "Taha Almohamed" }],
+  appleWebApp: {
+    title: "Taha",
+  },
   alternates: {
     canonical: "https://taljamri.com",
   },
@@ -29,13 +36,7 @@ export const metadata: Metadata = {
     description: "Building scalable systems, AI experiments, and modern web products.",
     url: "https://taljamri.com",
     siteName: "Taha Almohamed",
-    images: [
-      {
-        url: "/og.png",
-        width: 1200,
-        height: 630,
-      },
-    ],
+    images: [{ url: "/og.png", width: 1200, height: 630 }],
     locale: "en_US",
     type: "website",
   },
@@ -51,16 +52,10 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <meta name="apple-mobile-web-app-title" content="Taha" />
       <body>
-        {/* Structured Data (JSON-LD) for SEO */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -68,14 +63,14 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "Person",
               name: "Taha Almohamed",
-              "alternateName": ["Taha Al-Mohamed", "Taha Aljamri", "Taha Al-Jamri"],
+              alternateName: ["Taha Al-Mohamed", "Taha Aljamri", "Taha Al-Jamri"],
               url: "https://taljamri.com",
               jobTitle: "Software Engineer",
+              description: "Software engineer based in Bahrain, known as Taha Aljamri and Taha Almohamed.",
               sameAs: [
                 "https://github.com/taljamri",
                 "https://linkedin.com/in/taljamri",
               ],
-              "description": "Software engineer based in Bahrain, known as Taha Aljamri and Taha Almohamed.",
             }),
           }}
         />

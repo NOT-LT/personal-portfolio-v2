@@ -15,6 +15,7 @@ export interface HeroContent {
     bioPart2: string;
     ctaPrimary: { label: string; href: string };
     ctaSecondary: { label: string; href: string };
+    avatar?: string;
 }
 
 export interface Award {

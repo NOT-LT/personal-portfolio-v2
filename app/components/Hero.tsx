@@ -1,10 +1,24 @@
 "use client";
+import { useState, useEffect } from 'react';
 import Aurora from './Aurora';
 import Lanyard from './Lanyard';
 import type { HeroContent } from '@/lib/content';
 
 export default function Hero({ content }: { content: HeroContent }) {
-    const { name, tagline, bioPart1, universityName, universityUrl, bioPart2, ctaPrimary, ctaSecondary } = content;
+    const { name, tagline, bioPart1, universityName, universityUrl, bioPart2, ctaPrimary, ctaSecondary, avatar } = content;
+
+    // Controls whether the Lanyard is in the DOM at all.
+    // Static import ensures no dynamic-loading race that triggers WebGL context loss.
+    // On mobile this remains false so the canvas/physics never initialise.
+    const [isDesktop, setIsDesktop] = useState(false);
+
+    useEffect(() => {
+        const mq = window.matchMedia('(min-width: 1280px)');
+        setIsDesktop(mq.matches);
+        const handler = (e: MediaQueryListEvent) => setIsDesktop(e.matches);
+        mq.addEventListener('change', handler);
+        return () => mq.removeEventListener('change', handler);
+    }, []);
 
     return (
         <section className="min-h-screen flex items-center bg-bg pt-28.75 pb-16 sm:pb-25 relative overflow-hidden">
@@ -13,16 +27,31 @@ export default function Hero({ content }: { content: HeroContent }) {
                 <Aurora colorStops={['#00e5d0', '#0ea5e9', '#00e5d0']} blend={0.7} amplitude={0.2} speed={0.9} />
             </div>
 
-            {/* Lanyard — only shown on xl+ screens */}
-            <div className="hidden xl:block absolute top-0 bottom-0 right-[max(2rem,calc((100vw-1100px)/2))] w-115 2xl:w-130 z-1 overflow-hidden pointer-events-auto">
-                <div className="absolute inset-x-0 top-0 h-full">
-                    <Lanyard position={[0, 0, 17]} gravity={[0, -40, 0]} />
+            {/* Lanyard — conditionally rendered so the WebGL canvas never mounts on mobile */}
+            {isDesktop && (
+                <div className="absolute top-0 bottom-0 right-[max(2rem,calc((100vw-1100px)/2))] w-85 xl:w-115 2xl:w-130 z-1 overflow-hidden pointer-events-auto">
+                    <div className="absolute inset-x-0 top-0 h-full scale-75 xl:scale-100 origin-top transition-transform duration-300">
+                        <Lanyard position={[0, 0, 17]} gravity={[0, -40, 0]} />
+                    </div>
                 </div>
-            </div>
+            )}
 
-            {/* Content — on xl, constrain width to avoid overlapping lanyard */}
+            {/* Content */}
             <div className="max-w-275 mx-auto px-6 relative z-2 w-full sm:py-25 pointer-events-none">
                 <div className="w-full xl:max-w-145 xl:pr-8 pointer-events-auto">
+
+                    {/* Mobile profile photo — oval portrait, white bg fills transparency, centered */}
+                    {avatar && (
+                        <div className="xl:hidden mb-10 flex justify-center animate-[fadeUp_0.5s_ease_both]">
+                            <img
+                                src={avatar}
+                                alt={name}
+                                width={200}
+                                height={256}
+                                className="w-[200px] h-[256px] rounded-full bg-white object-cover object-top"
+                            />
+                        </div>
+                    )}
 
                     <span className="font-mono text-[0.72rem] font-medium tracking-[0.14em] uppercase text-accent block animate-[fadeUp_0.5s_ease_both] [animation-delay:0.05s]">Hi, my name is</span>
 

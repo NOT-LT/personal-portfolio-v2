@@ -1,5 +1,15 @@
- 
 'use client';
+
+// Suppress known Three.js/Rapier deprecation warnings from library internals
+if (typeof window !== 'undefined') {
+    const _warn = console.warn.bind(console);
+    console.warn = (...args: unknown[]) => {
+        const msg = typeof args[0] === 'string' ? args[0] : '';
+        if (msg.includes('THREE.Clock') || msg.includes('deprecated parameters for the initialization function')) return;
+        _warn(...args);
+    };
+}
+
 import { useEffect, useRef, useState } from 'react';
 import { Canvas, extend, useFrame } from '@react-three/fiber';
 import { useGLTF, useTexture, Environment, Lightformer } from '@react-three/drei';

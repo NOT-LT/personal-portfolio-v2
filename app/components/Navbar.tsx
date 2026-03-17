@@ -14,8 +14,8 @@ export default function Navbar() {
     return (
         <>
             <nav className={`fixed left-1/2 -translate-x-1/2 z-100 w-[calc(100%-48px)] bg-surface/60 backdrop-blur-lg border border-line rounded-full transition-[top,height,max-width] duration-300 ease-in-out ${scrolled ? 'top-2 h-10 max-w-120' : 'top-4 h-13 max-w-(--max-w)'}`}>
-                <div className="px-5 h-full flex items-center justify-between relative">
-                    <a href="#" className="text-fg hover:text-accent transition-colors duration-180 ml-1">
+                <div className="px-3 h-full flex items-center justify-between relative">
+                    <a href="#" className="text-fg hover:text-accent transition-colors duration-180 ml-0">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 258 258" fill="currentColor" className={`transition-[width,height] duration-300 ${scrolled ? 'w-7 h-7' : 'w-8 h-8'}`}>
                             <g transform="translate(0,258) scale(0.1,-0.1)">
                                 <path d="M498 1865 c-180 -143 -327 -264 -327 -269 -1 -5 143 -6 355 -2 l356 7 292 233 c160 128 306 243 324 256 17 13 32 27 32 31 0 4 -159 7 -352 6 l-353 -2 -327 -260z" />
