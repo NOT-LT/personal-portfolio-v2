@@ -1,7 +1,9 @@
 "use client";
 import { useEffect, useRef } from 'react';
+import type { ContactContent } from '@/lib/content';
 
-export default function Contact() {
+export default function Contact({ content }: { content: ContactContent }) {
+    const { email, message, socials, footer } = content;
     const sectionRef = useRef<HTMLElement>(null);
 
     useEffect(() => {
@@ -30,11 +32,11 @@ export default function Contact() {
                             <span className="text-accent">{"together."}</span>
                         </h2>
                         <p className="font-text text-[0.9375rem] font-normal leading-[1.78] tracking-[-0.002em] text-muted">
-                            {"I'm currently open to new opportunities. Whether you have a question, a project idea, or just want to say hi — my inbox is always open."}
+                            {message}
                         </p>
                         <div className="mt-9 flex justify-center gap-3 flex-wrap">
                             <a
-                                href="mailto:taha@example.com"
+                                href={`mailto:${email}`}
                                 className="inline-flex items-center gap-2 font-text text-sm font-medium tracking-[-0.008em] py-2.75 px-6 rounded-full border-none cursor-pointer transition-[opacity,border-color] duration-180 whitespace-nowrap bg-accent text-bg hover:opacity-[0.88]"
                             >
                                 {"Say Hello"}
@@ -58,11 +60,11 @@ export default function Contact() {
             <footer className="border-t border-line py-7 bg-bg">
                 <div className="max-w-275 mx-auto px-6 flex items-center justify-between flex-wrap gap-3">
                     <span className="font-mono text-[0.68rem] tracking-[0.04em] text-dim">
-                        {"© 2026 Taha Aljamri. All rights reserved."}
+                        {footer.copyright}
                     </span>
                     <div className="flex gap-5">
                         <a
-                            href="#"
+                            href={socials.github}
                             aria-label="GitHub"
                             className="text-dim hover:text-muted transition-colors duration-180"
                         >
@@ -78,7 +80,7 @@ export default function Contact() {
                             </svg>
                         </a>
                         <a
-                            href="#"
+                            href={socials.linkedin}
                             aria-label="LinkedIn"
                             className="text-dim hover:text-muted transition-colors duration-180"
                         >
@@ -94,7 +96,7 @@ export default function Contact() {
                             </svg>
                         </a>
                         <a
-                            href="#"
+                            href={socials.twitter}
                             aria-label="Twitter"
                             className="text-dim hover:text-muted transition-colors duration-180"
                         >

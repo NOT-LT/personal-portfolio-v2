@@ -1,28 +1,10 @@
 "use client";
 
 import { useEffect, useRef } from 'react';
+import type { AboutContent } from '@/lib/content';
 
-const SKILLS: string[] = [
-    'C++', 'Python', 'Next.js', 'Express.js', 'FastAPI',
-    'CNN / Computer Vision', 'RAG Systems', 'LLM Inference',
-    'Docker & Containerization', 'AWS CDK', 'Linux Systems',
-    'PostgreSQL', 'System Architecture', 'Distributed Systems'
-];
-
-const AWARDS = [
-    {
-        title: '1st Place Winner at the .bh Hackathon',
-        org: 'Telecommunication Regulatory Authority (TRA)',
-        desc: 'Built a web app for Universal Acceptance, IDN, and EAI.',
-    },
-    {
-        title: 'Best Use of Technology Award',
-        org: 'Bahrain Space Agency',
-        desc: 'Developed planetary simulation systems for exoplanets.',
-    }
-];
-
-export default function About() {
+export default function About({ content }: { content: AboutContent }) {
+    const { heading, bio, skills, awards, education, cvHref } = content;
     const sectionRef = useRef<HTMLElement | null>(null);
 
     useEffect(() => {
@@ -47,8 +29,8 @@ export default function About() {
                     </span>
 
                     <h2 className="font-display text-[clamp(1.6rem,2.8vw,2.2rem)] font-bold tracking-[-0.022em] leading-[1.18] text-fg">
-                        Software Engineer,<br />
-                        <span className="text-accent">Builder &amp; Creator</span>
+                        {heading.split(',')[0]},<br />
+                        <span className="text-accent">{heading.split(',').slice(1).join(',').trim()}</span>
                     </h2>
 
                     <div className="w-7 h-0.5 bg-accent rounded-[1px] mt-3.5" />
@@ -60,17 +42,11 @@ export default function About() {
                     {/* LEFT — About text → Awards → Download CV */}
                     <div className="reveal opacity-0 translate-y-4.5 transition-[opacity,transform] duration-550 [&.in]:opacity-100 [&.in]:translate-y-0 flex flex-col gap-10">
                         <div className="flex flex-col gap-6">
-                            <p className="font-text text-[0.9375rem] leading-[1.8] tracking-[-0.002em] text-muted">
-                                Based in Bahrain, I build software with a focus on clarity, performance, and purpose.
-                                I approach development as a craft — creating systems that are intuitive, scalable,
-                                and built to last.
-                            </p>
-
-                            <p className="font-text text-[0.9375rem] leading-[1.8] tracking-[-0.002em] text-muted">
-                                Outside of code, I run my own home server, explore human-computer interaction,
-                                and study Arabic poetry. These interests shape how I think about systems,
-                                logic, and design.
-                            </p>
+                            {bio.map((paragraph, i) => (
+                                <p key={i} className="font-text text-[0.9375rem] leading-[1.8] tracking-[-0.002em] text-muted">
+                                    {paragraph}
+                                </p>
+                            ))}
                         </div>
 
                         {/* Awards */}
@@ -80,7 +56,7 @@ export default function About() {
                             </span>
 
                             <div className="flex flex-col gap-6">
-                                {AWARDS.map((award, i) => (
+                                {awards.map((award, i) => (
                                     <div key={i}>
                                         <div className="font-display text-[0.95rem] font-bold tracking-tight text-fg mb-1">
                                             {award.title}
@@ -99,7 +75,7 @@ export default function About() {
                         {/* Download CV */}
                         <div className="mt-auto pt-2">
                             <a
-                                href="#"
+                                href={cvHref}
                                 className="inline-flex items-center gap-2.5 font-text text-sm font-medium py-3 px-7 rounded-full bg-accent text-bg hover:opacity-[0.9] transition-all duration-200 active:scale-95"
                             >
                                 <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
@@ -120,7 +96,7 @@ export default function About() {
                             </span>
 
                             <div className="flex flex-wrap gap-2.5">
-                                {SKILLS.map(s => (
+                                {skills.map(s => (
                                     <span
                                         key={s}
                                         className="bg-surface border border-line text-muted font-mono text-[0.68rem] px-3.5 py-1.5 rounded-[4px] transition-all duration-200 hover:border-accent/40 hover:text-fg hover:-translate-y-[1px]"
@@ -139,11 +115,11 @@ export default function About() {
 
                             <div>
                                 <div className="font-display text-[0.95rem] font-bold tracking-tight text-fg">
-                                    B.Sc. in Software Engineering
+                                    {education.degree}
                                 </div>
 
                                 <div className="font-mono text-[0.62rem] font-bold tracking-widest text-accent/80 uppercase mt-1">
-                                    University of Bahrain <span className="mx-1 opacity-40">/</span> 2023 – Present
+                                    {education.school} <span className="mx-1 opacity-40">/</span> {education.period}
                                 </div>
                             </div>
                         </div>

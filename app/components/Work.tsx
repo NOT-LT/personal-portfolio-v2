@@ -1,83 +1,13 @@
 "use client";
 import { useState, useEffect, useMemo, useRef } from 'react';
+import type { WorkContent } from '@/lib/content';
 
-interface Job {
-    date: string;
-    title: string;
-    shortTitle: string;
-    company: string;
-    location: string;
-    range: string;
-    url: string;
-    bullets: string[];
-}
+export default function Work({ content }: { content: WorkContent }) {
+    const { jobs } = content;
 
-const JOBS: Job[] = [
-    {
-        date: '2025-07-01',
-        title: 'Software Engineer Intern',
-        shortTitle: 'SE Intern',
-        company: 'Array Innovation',
-        location: 'Manama, Bahrain',
-        range: 'August – September 2025',
-        url: 'https://array.world/',
-        bullets: [
-            'Built data-intensive enterprise software, including RAG-based systems, using Python, FastAPI, Next.js, and Tailwind CSS',
-            'Designed, containerized, and deployed backend services with Docker and AWS (ECS, ECR, Lambda, S3, Bedrock)',
-            'Improved system performance through architectural optimizations, reducing response times by up to 30%',
-            'Contributed across the full software development lifecycle in an Agile environment, including design, implementation, and code reviews',
-        ],
-    },
-    {
-        date: '2024-07-01',
-        title: 'Software Developer Intern',
-        shortTitle: 'SD Intern',
-        company: 'Sama Card',
-        location: 'Muharraq, Bahrain',
-        range: 'July – September 2024',
-        url: 'https://samacardsbh.com/en',
-        bullets: [
-            'Contributed to the design of a new health insurance service by gathering and analyzing stakeholder requirements',
-            'Developed and integrated backend and client applications using Laravel (PHP), Angular, and Ionic',
-            'Participated in code reviews and refactoring efforts to improve code quality and maintainability',
-            'Optimized existing applications, reducing system load times by up to 25%',
-        ],
-    },
-    {
-        date: '2024-06-01',
-        title: 'Instructor',
-        shortTitle: 'Instructor',
-        company: 'Hub Bahrain',
-        location: 'Khalifa Town, Bahrain',
-        range: 'June 2024',
-        url: '',
-        bullets: [
-            'Delivered hands-on workshops on Artificial Intelligence and Machine Learning for high school and university students',
-            'Focused on practical applications, foundational concepts, and clear technical communication',
-            'Guided participants through real-world examples and interactive learning exercises',
-        ],
-    },
-    {
-        date: '2023-01-01',
-        title: 'Freelance Software Engineer',
-        shortTitle: 'Freelance',
-        company: 'Freelance',
-        location: 'Remote',
-        range: '2023 – Present',
-        url: '',
-        bullets: [
-            'Designed and developed full-stack web applications for clients using modern frameworks and clean, maintainable architectures',
-            'Built responsive user interfaces and backend services tailored to client requirements and performance goals',
-            'Integrated third-party APIs, authentication, and database solutions to support real-world use cases',
-            'Collaborated directly with clients to gather requirements, provide technical guidance, and deliver scalable solutions',
-        ],
-    },
-];
-
-export default function Work() {
     const sortedJobs = useMemo(
-        () => [...JOBS].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()),
-        []
+        () => [...jobs].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()),
+        [jobs]
     );
 
     const [active, setActive] = useState(0);

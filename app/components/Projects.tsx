@@ -1,104 +1,13 @@
 "use client";
-import { useState, useEffect, useRef, ReactNode } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import SpotlightCard from './SpotlightCard';
-
-interface Project {
-    icon: ReactNode;
-    title: string;
-    desc: string;
-    tags: string[];
-    github?: string;
-    external?: string;
-}
-
-const PROJECTS: Project[] = [
-    {
-        icon: (
-            <svg width="26" height="26" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-                <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
-                <polyline points="9 22 9 12 15 12 15 22" />
-            </svg>
-        ),
-        title: 'Nestify',
-        desc: 'A comprehensive property marketplace system that seamlessly connects property seekers with providers. Features advanced search, real-time listings, and an intuitive dashboard.',
-        tags: ['Node.js', 'Express', 'MongoDB', 'Cloudinary', 'EJS'],
-        github: '',
-        external: '',
-    },
-    {
-        icon: (
-            <svg width="26" height="26" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
-            </svg>
-        ),
-        title: 'Rapid JS',
-        desc: 'Custom lightweight, reactive front-end framework featuring a virtual DOM, reactive state management, and an elegant component lifecycle system.',
-        tags: ['JavaScript', 'Virtual DOM', 'State Management', 'Event Handling', 'Component Management'],
-        github: '',
-    },
-    {
-        icon: (
-            <svg width="26" height="26" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-                <circle cx="12" cy="12" r="10" />
-                <path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32" />
-            </svg>
-        ),
-        title: 'Facial Emotion Detection CNN',
-        desc: 'EfficientNetB2 transfer learning on FER2013 with Mixup augmentation, cosine annealing, and live webcam inference. 7-class emotion classification at ≤15M parameters.',
-        tags: ['Python', 'TensorFlow', 'Keras', 'CNN', 'CV2', 'Face detection'],
-        github: '',
-    },
-    {
-        icon: (
-            <svg width="26" height="26" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-                <rect x="2" y="4" width="20" height="16" rx="2" />
-                <path d="M7 15l5-5 5 5" />
-            </svg>
-        ),
-        title: 'Movie Recommendation System',
-        desc: 'Intelligent system leveraging collaborative filtering and content-based approaches on the MovieLens 1M dataset to deliver personalized suggestions.',
-        tags: ['Python', 'Machine Learning', 'Pandas', 'Scikit-learn', 'Collaborative Filtering'],
-        github: '',
-    },
-    {
-        icon: (
-            <svg width="26" height="26" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-                <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
-                <polyline points="9 12 12 15 15 12" />
-                <line x1="12" y1="8" x2="12" y2="15" />
-            </svg>
-        ),
-        title: 'Instagram Media Downloader',
-        desc: 'Self-hosted Instagram DM bot that lets users download posts and stories by sharing them to the bot or mentioning it in comments. Deployed via Docker with a persistent SQLite store.',
-        tags: ['C#', 'Instagram API', 'Bot', 'Docker', 'SQLite'],
-        github: 'https://github.com/NOT-LT/Instagram-MediaDownloader',
-    },
-    {
-        icon: (
-            <svg width="26" height="26" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-                <path d="M2 22l5.5-5.5" />
-                <path d="M16.5 3.5a2.12 2.12 0 013 3L7.5 18.5l-4.5 1 1-4.5 12.5-12.5z" />
-                <path d="M15 5l4 4" />
-            </svg>
-        ),
-        title: 'Delta Color Picker',
-        desc: 'Lightweight Windows desktop tool for capturing the exact color of any pixel on screen. Trigger via button or ALT+X shortcut and instantly get the RGB and HEX values.',
-        tags: ['C#', 'WPF', 'MVVM', 'Color Theory', 'Desktop App'],
-        github: 'https://github.com/NOT-LT/DeltaColorPicker',
-    },
-];
+import type { ProjectsContent } from '@/lib/content';
 
 const GithubIcon = () => (
     <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
         <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22" />
     </svg>
 );
-
-// const ExternalIcon = () => (
-//     <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-//         <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3" />
-//     </svg>
-// );
 
 const ChevronLeft = () => (
     <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -112,7 +21,9 @@ const ChevronRight = () => (
     </svg>
 );
 
-export default function Projects() {
+export default function Projects({ content }: { content: ProjectsContent }) {
+    const { projects, githubProfileUrl } = content;
+
     const [offset, setOffset] = useState(0);
     const [visible, setVisible] = useState(3);
     const [cardStep, setCardStep] = useState(0);
@@ -141,8 +52,8 @@ export default function Projects() {
     }, []);
 
     useEffect(() => {
-        setOffset(prev => Math.min(prev, Math.max(0, PROJECTS.length - visible)));
-    }, [visible]);
+        setOffset(prev => Math.min(prev, Math.max(0, projects.length - visible)));
+    }, [visible, projects.length]);
 
     useEffect(() => {
         const io = new IntersectionObserver(
@@ -153,7 +64,7 @@ export default function Projects() {
         return () => io.disconnect();
     }, []);
 
-    const maxOffset = Math.max(0, PROJECTS.length - visible);
+    const maxOffset = Math.max(0, projects.length - visible);
 
     return (
         <section id="projects" className="py-16 sm:py-25 bg-bg-secondary" ref={sectionRef}>
@@ -172,16 +83,18 @@ export default function Projects() {
                             className="flex gap-4 transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]"
                             style={{ transform: `translateX(-${offset * cardStep}px)` }}
                         >
-                            {PROJECTS.map((p) => (
+                            {projects.map((p) => (
                                 <SpotlightCard
                                     key={p.title}
                                     className="shrink-0 w-full sm:w-[calc(50%-8px)] lg:w-[calc(33.333%-10.667px)] group bg-surface border border-line rounded-[10px] hover:border-line-accent transition-[border-color] duration-550"
                                     spotlightColor="rgba(0, 229, 208, 0.08)"
                                 >
-                                    {/* ... keep existing card content */}
                                     <div className="relative z-[1] p-7 flex flex-col gap-4 h-full">
                                         <div className="flex justify-between items-start">
-                                            <span className="text-accent opacity-80">{p.icon}</span>
+                                            <span
+                                                className="text-accent opacity-80"
+                                                dangerouslySetInnerHTML={{ __html: p.icon }}
+                                            />
                                             <div className="flex gap-3.5">
                                                 {p.github !== undefined && (
                                                     <a
@@ -248,7 +161,7 @@ export default function Projects() {
                     {/* View More on GitHub Link */}
                     <div className="mt-16 flex justify-center">
                         <a
-                            href="https://github.com/NOT-LT"
+                            href={githubProfileUrl}
                             target="_blank"
                             rel="noreferrer"
                             className="group flex items-center gap-2.5 font-mono text-[0.72rem] font-medium tracking-[0.14em] uppercase text-dim hover:text-accent transition-colors duration-200"
