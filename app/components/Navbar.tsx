@@ -5,8 +5,15 @@ export default function Navbar() {
     const [open, setOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const [isPageLoaded, setIsPageLoaded] = useState(false);
+    const [theme, setTheme] = useState<"dark" | "light">("dark");
 
     useEffect(() => {
+        // Check for saved theme preference or default to dark
+        const savedTheme = localStorage.getItem("theme") as "dark" | "light" | null;
+        const preferredTheme = savedTheme || "dark";
+        setTheme(preferredTheme);
+        document.documentElement.setAttribute("data-theme", preferredTheme);
+
         const onScroll = () => setScrolled(window.scrollY > 24);
         window.addEventListener('scroll', onScroll, { passive: true });
 
@@ -19,6 +26,13 @@ export default function Navbar() {
             window.clearTimeout(loadTimer);
         };
     }, []);
+
+    const toggleTheme = () => {
+        const newTheme = theme === "dark" ? "light" : "dark";
+        setTheme(newTheme);
+        document.documentElement.setAttribute("data-theme", newTheme);
+        localStorage.setItem("theme", newTheme);
+    };
 
     return (
         <>
@@ -41,16 +55,55 @@ export default function Navbar() {
                         <li><a href="#contact" className="text-[0.8125rem] text-muted hover:text-fg transition-colors duration-180">Contact</a></li>
                     </ul>
 
-                    {/* Hamburger button */}
-                    <button
-                        onClick={() => setOpen(!open)}
-                        className="sm:hidden flex flex-col justify-center items-center w-8 h-8 gap-1.25 text-fg"
-                        aria-label="Toggle menu"
-                    >
-                        <span className={`block h-px w-5 bg-current transition-all duration-200 origin-center ${open ? "rotate-45 translate-y-1.75" : ""}`} />
-                        <span className={`block h-px w-5 bg-current transition-all duration-200 ${open ? "opacity-0" : ""}`} />
-                        <span className={`block h-px w-5 bg-current transition-all duration-200 origin-center ${open ? "-rotate-45 -translate-y-1.75" : ""}`} />
-                    </button>
+                    <div className="flex items-center gap-2">
+                        {/* Theme toggle button */}
+                        <button
+                            onClick={toggleTheme}
+                            className="hidden sm:flex items-center justify-center w-8 h-8 rounded-full text-muted hover:text-fg hover:bg-surface-2 transition-all duration-300 hover:scale-110 active:scale-95"
+                            aria-label="Toggle theme"
+                        >
+                            <div className="relative w-[18px] h-[18px]">
+                                <svg
+                                    width="18"
+                                    height="18"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    viewBox="0 0 24 24"
+                                    className={`absolute inset-0 transition-all duration-500 ${theme === "dark" ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 rotate-90 scale-0'}`}
+                                >
+                                    <circle cx="12" cy="12" r="5" />
+                                    <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+                                </svg>
+                                <svg
+                                    width="18"
+                                    height="18"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    viewBox="0 0 24 24"
+                                    className={`absolute inset-0 transition-all duration-500 ${theme === "light" ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-90 scale-0'}`}
+                                >
+                                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                                </svg>
+                            </div>
+                        </button>
+
+                        {/* Hamburger button */}
+                        <button
+                            onClick={() => setOpen(!open)}
+                            className="sm:hidden flex flex-col justify-center items-center w-8 h-8 gap-1.25 text-fg"
+                            aria-label="Toggle menu"
+                        >
+                            <span className={`block h-px w-5 bg-current transition-all duration-200 origin-center ${open ? "rotate-45 translate-y-1.75" : ""}`} />
+                            <span className={`block h-px w-5 bg-current transition-all duration-200 ${open ? "opacity-0" : ""}`} />
+                            <span className={`block h-px w-5 bg-current transition-all duration-200 origin-center ${open ? "-rotate-45 -translate-y-1.75" : ""}`} />
+                        </button>
+                    </div>
                 </div>
             </nav>
 
@@ -61,6 +114,48 @@ export default function Navbar() {
                     <li><a href="#work" onClick={() => setOpen(false)} className="block px-4 py-3 text-sm text-muted hover:text-fg hover:bg-surface-2 rounded-xl transition-colors duration-180">Work</a></li>
                     <li><a href="#projects" onClick={() => setOpen(false)} className="block px-4 py-3 text-sm text-muted hover:text-fg hover:bg-surface-2 rounded-xl transition-colors duration-180">Projects</a></li>
                     <li><a href="#contact" onClick={() => setOpen(false)} className="block px-4 py-3 text-sm text-muted hover:text-fg hover:bg-surface-2 rounded-xl transition-colors duration-180">Contact</a></li>
+                    <li className="border-t border-line mt-2 pt-2">
+                        <button
+                            onClick={toggleTheme}
+                            className="w-full flex items-center justify-between px-4 py-3 text-sm text-muted hover:text-fg hover:bg-surface-2 rounded-xl transition-all duration-180"
+                        >
+                            <span>Theme</span>
+                            <span className="flex items-center gap-2">
+                                <div className="relative w-4 h-4">
+                                    <svg
+                                        width="16"
+                                        height="16"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        viewBox="0 0 24 24"
+                                        className={`absolute inset-0 transition-all duration-500 ${theme === "dark" ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 rotate-90 scale-0'}`}
+                                    >
+                                        <circle cx="12" cy="12" r="5" />
+                                        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+                                    </svg>
+                                    <svg
+                                        width="16"
+                                        height="16"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        viewBox="0 0 24 24"
+                                        className={`absolute inset-0 transition-all duration-500 ${theme === "light" ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-90 scale-0'}`}
+                                    >
+                                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                                    </svg>
+                                </div>
+                                <span className="transition-opacity duration-300">
+                                    {theme === "dark" ? "Light" : "Dark"}
+                                </span>
+                            </span>
+                        </button>
+                    </li>
                 </ul>
             </div>
         </>
