@@ -9,7 +9,7 @@ export default function Hero() {
         <section className="min-h-screen flex items-center bg-bg pt-28.75 pb-16 sm:pb-25 relative overflow-hidden">
 
             <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.55] mask-[linear-gradient(to_bottom,transparent_0%,black_25%,black_70%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,black_25%,black_70%,transparent_100%)]">
-                <Aurora colorStops={['#00e5d0', '#0ea5e9', '#00e5d0']} blend={0.7} amplitude={0.2} speed={0.4} />
+                <Aurora colorStops={['#00e5d0', '#0ea5e9', '#00e5d0']} blend={0.7} amplitude={0.2} speed={0.9} />
             </div>
 
             {/* Lanyard — only shown on xl+ screens */}

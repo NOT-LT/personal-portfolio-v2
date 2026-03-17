@@ -1,6 +1,0 @@
-1. The size of the experience section should not change when I cahnge the experience select
-2. Loadingwebsite animations
-3. more moving/text animations
-4. Light mode
-5. Make it SSG with Next
-6. Change the projects and experiences
