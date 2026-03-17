@@ -39,7 +39,7 @@ export default function Hero() {
                     <p className="font-text text-[0.9375rem] font-normal leading-[1.78] tracking-[-0.002em] text-muted animate-[fadeUp_0.5s_ease_both] [animation-delay:0.32s] max-w-[490px] mb-9">
                         Software Engineer specializing in full-stack development and system
                         architecture. Currently pursuing a B.Sc. in Software Engineering at{' '}
-                        <a href="https://www.uob.edu.bh" target="_blank" rel="noreferrer" className="text-accent hover:underline">
+                        <a href="https://www.uob.edu.bh" target="_blank" rel="noreferrer" className="link-underline text-accent">
                             University of Bahrain
                         </a>
                         , focused on building scalable, real-world applications.
@@ -55,26 +55,7 @@ export default function Hero() {
                         <a href="#projects" className="inline-flex items-center gap-2 font-text text-sm font-medium tracking-[-0.008em] py-[11px] px-6 rounded-full cursor-pointer transition-[opacity,border-color] duration-180 whitespace-nowrap bg-transparent border border-faint text-fg hover:border-line-hover">View Projects</a>
                     </div>
 
-                    <div className="animate-[fadeUp_0.5s_ease_both] [animation-delay:0.54s] flex gap-6 sm:gap-10 pt-7 border-t border-line">
-                        <div className="flex flex-col gap-1">
-                            <span className="font-display text-[1.75rem] font-bold tracking-[-0.04em] text-accent leading-none">
-                                <CountUp to={3} duration={2} className="" />+
-                            </span>
-                            <span className="text-[0.75rem] text-dim">Years coding</span>
-                        </div>
-                        <div className="flex flex-col gap-1">
-                            <span className="font-display text-[1.75rem] font-bold tracking-[-0.04em] text-accent leading-none">
-                                <CountUp to={10} duration={2} className="" />+
-                            </span>
-                            <span className="text-[0.75rem] text-dim">Projects built</span>
-                        </div>
-                        <div className="flex flex-col gap-1">
-                            <span className="font-display text-[1.75rem] font-bold tracking-[-0.04em] text-accent leading-none">
-                                <CountUp to={4} duration={2} className="" />
-                            </span>
-                            <span className="text-[0.75rem] text-dim">Core courses</span>
-                        </div>
-                    </div>
+                  
                 </div>
             </div>
         </section>

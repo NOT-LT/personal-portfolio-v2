@@ -93,3 +93,29 @@
     border-radius: 2px;
   }
 }
+
+@keyframes fadeSlide {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@layer components {
+  .link-underline {
+    @apply relative inline-block text-accent;
+  }
+
+  .link-underline::after {
+    content: "";
+    @apply absolute left-0 bottom-[5px] h-[0.5px] w-full scale-x-0 origin-left bg-accent transition-transform duration-300;
+  }
+
+  .link-underline:hover::after {
+    @apply scale-x-100;
+  }
+}

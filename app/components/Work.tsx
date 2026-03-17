@@ -1,56 +1,85 @@
 "use client";
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 
 interface Job {
-    tab: string;
-    shortTab: string;
-    title: string;
-    company: string;
     date: string;
+    title: string;
+    shortTitle: string;
+    company: string;
+    location: string;
+    range: string;
+    url: string;
     bullets: string[];
 }
 
 const JOBS: Job[] = [
     {
-        tab: 'University of Bahrain',
-        shortTab: 'UoB',
-        title: 'Software Engineering Student',
-        company: '@ University of Bahrain',
-        date: '2022 – Present',
+        date: '2025-07-01',
+        title: 'Software Engineer Intern',
+        shortTitle: 'SE Intern',
+        company: 'Array Innovation',
+        location: 'Manama, Bahrain',
+        range: 'August – September 2025',
+        url: 'https://array.world/',
         bullets: [
-            'Built a three-layer Java property marketplace system (UC-1–UC-4) with UUID-based auth and RFC-compliant validation',
-            'Completed 18-question Wireshark packet analysis quiz with full tshark verification',
-            'Studied InfoSec — Hamming codes, cryptography, SQL injection, zero-knowledge proofs',
-            'Analyzed UoB SIS through a CSCW Communication / Coordination / Collaboration framework',
+            'Built data-intensive enterprise software, including RAG-based systems, using Python, FastAPI, Next.js, and Tailwind CSS',
+            'Designed, containerized, and deployed backend services with Docker and AWS (ECS, ECR, Lambda, S3, Bedrock)',
+            'Improved system performance through architectural optimizations, reducing response times by up to 30%',
+            'Contributed across the full software development lifecycle in an Agile environment, including design, implementation, and code reviews',
         ],
     },
     {
-        tab: 'Home Lab',
-        shortTab: 'HomeLab',
-        title: 'Self-Managed Infrastructure',
-        company: '@ Home Lab',
-        date: '2023 – Present',
+        date: '2024-07-01',
+        title: 'Software Developer Intern',
+        shortTitle: 'SD Intern',
+        company: 'Sama Card',
+        location: 'Muharraq, Bahrain',
+        range: 'July – September 2024',
+        url: 'https://samacardsbh.com/en',
         bullets: [
-            'Hosts Ubuntu Server on HP Pavilion with full Docker/Portainer media stack — Jellyfin, Radarr, Sonarr, Prowlarr, Bazarr',
-            'Configured Cloudflare Tunnels for secure remote access with zero exposed ports',
-            'Automated media discovery, indexing, and subtitle management on a dedicated drive',
+            'Contributed to the design of a new health insurance service by gathering and analyzing stakeholder requirements',
+            'Developed and integrated backend and client applications using Laravel (PHP), Angular, and Ionic',
+            'Participated in code reviews and refactoring efforts to improve code quality and maintainability',
+            'Optimized existing applications, reducing system load times by up to 25%',
         ],
     },
     {
-        tab: 'ML / AI Projects',
-        shortTab: 'ML/AI',
-        title: 'ML & AI Research',
-        company: '@ Personal',
-        date: '2024 – Present',
+        date: '2024-06-01',
+        title: 'Instructor',
+        shortTitle: 'Instructor',
+        company: 'Hub Bahrain',
+        location: 'Khalifa Town, Bahrain',
+        range: 'June 2024',
+        url: '',
         bullets: [
-            'Built facial emotion CNN on FER2013 (7 classes, ≤15M params), progressing scratch VGG → EfficientNetB2 transfer learning',
-            'Implemented Mixup augmentation, cosine annealing LR, boosted class weights, and TTA on Kaggle P100',
-            'Resolved tf.data pipeline bugs, dtype mismatches, and deprecated LR schedule APIs in TF 2.19',
+            'Delivered hands-on workshops on Artificial Intelligence and Machine Learning for high school and university students',
+            'Focused on practical applications, foundational concepts, and clear technical communication',
+            'Guided participants through real-world examples and interactive learning exercises',
+        ],
+    },
+    {
+        date: '2023-01-01',
+        title: 'Freelance Software Engineer',
+        shortTitle: 'Freelance',
+        company: 'Freelance',
+        location: 'Remote',
+        range: '2023 – Present',
+        url: '',
+        bullets: [
+            'Designed and developed full-stack web applications for clients using modern frameworks and clean, maintainable architectures',
+            'Built responsive user interfaces and backend services tailored to client requirements and performance goals',
+            'Integrated third-party APIs, authentication, and database solutions to support real-world use cases',
+            'Collaborated directly with clients to gather requirements, provide technical guidance, and deliver scalable solutions',
         ],
     },
 ];
 
 export default function Work() {
+    const sortedJobs = useMemo(
+        () => [...JOBS].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()),
+        []
+    );
+
     const [active, setActive] = useState(0);
     const [animKey, setAnimKey] = useState(0);
     const sectionRef = useRef<HTMLElement>(null);
@@ -71,50 +100,79 @@ export default function Work() {
         }
     };
 
-    const job = JOBS[active];
+    const job = sortedJobs[active];
 
     return (
         <section id="work" className="py-16 sm:py-25 bg-bg" ref={sectionRef}>
             <div className="max-w-275 mx-auto px-6">
-
                 <div className="mb-14 reveal opacity-0 translate-y-4.5 transition-[opacity,transform] duration-550 [&.in]:opacity-100 [&.in]:translate-y-0">
-                    <span className="font-mono text-[0.72rem] font-medium tracking-[0.14em] uppercase text-accent block mb-3.5">Experience</span>
-                    <h2 className="font-display text-[clamp(1.6rem,2.8vw,2.2rem)] font-bold tracking-[-0.022em] leading-[1.18] text-fg">{"Where I've Worked"}</h2>
+                    <span className="font-mono text-[0.72rem] font-medium tracking-[0.14em] uppercase text-accent block mb-3.5">
+                        Experience
+                    </span>
+                    <h2 className="font-display text-[clamp(1.6rem,2.8vw,2.2rem)] font-bold tracking-[-0.022em] leading-[1.18] text-fg">
+                        {"Where I've Worked"}
+                    </h2>
                     <div className="w-7 h-0.5 bg-accent rounded-[1px] mt-3.5" />
                 </div>
 
                 <div className="reveal opacity-0 translate-y-4.5 transition-[opacity,transform] duration-550 [&.in]:opacity-100 [&.in]:translate-y-0 flex flex-col sm:flex-row">
-
-                    {/* Tabs — horizontal pills on mobile, vertical list on desktop */}
-                    <div className="sm:w-[200px] shrink-0 sm:border-l border-line">
-                        <div className="flex sm:flex-col gap-2 sm:gap-0 overflow-x-auto pb-4 sm:pb-0 no-scrollbar">
-                            {JOBS.map((j, i) => (
+                    <div className="sm:w-[220px] shrink-0 sm:self-start sm:border-l border-dim">
+                        <div className="relative font-display flex sm:flex-col gap-2 sm:gap-0 overflow-x-auto pb-4 sm:pb-0 no-scrollbar">
+                            {/* Sliding active indicator — desktop only */}
+                            <div
+                                className="hidden sm:block absolute left-0 w-px bg-accent pointer-events-none transition-transform duration-250 ease-[cubic-bezier(0.4,0,0.2,1)]"
+                                style={{
+                                    height: `${100 / sortedJobs.length}%`,
+                                    transform: `translateY(${active * 100}%)`,
+                                }}
+                            />
+                            {sortedJobs.map((j, i) => (
                                 <button
-                                    key={j.tab}
+                                    key={`${j.company}-${j.date}`}
                                     onClick={() => handleTabClick(i)}
                                     className={[
-                                        'shrink-0 text-left px-4 sm:px-5 py-2.5 sm:py-3 text-[0.8125rem] cursor-pointer whitespace-nowrap transition-[color,border-color,background] duration-200',
-                                        'rounded-full sm:rounded-none sm:border-l-2 sm:-ml-px',
+                                        'shrink-0 text-left px-4 sm:px-5 py-2.5 sm:py-3 text-[0.8125rem] cursor-pointer whitespace-nowrap transition-[color,background] duration-200',
+                                        'rounded-full sm:rounded-none',
                                         i === active
-                                            ? 'bg-accent/8 text-accent border-transparent sm:border-accent'
-                                            : 'bg-transparent text-dim border-transparent hover:text-muted hover:bg-white/2',
+                                            ? 'bg-accent/8 text-accent'
+                                            : 'bg-transparent text-dim hover:text-muted hover:bg-white/2',
                                     ].join(' ')}
                                 >
-                                    <span className="sm:hidden">{j.shortTab}</span>
-                                    <span className="hidden sm:inline">{j.tab}</span>
+                                    <span className="sm:hidden">{j.shortTitle}</span>
+                                    <span className="hidden sm:inline">{j.company}</span>
                                 </button>
                             ))}
                         </div>
                     </div>
 
-                    {/* Panel with transition */}
-                    <div className="flex-1 pt-6 sm:pt-0 sm:pl-12 min-w-0">
+                    <div className="flex-1 pt-6 sm:pt-0 sm:pl-12 min-w-0 min-h-[320px]">
                         <div key={animKey} className="animate-[fadeSlide_0.35s_ease_both]">
                             <div className="font-display text-[1rem] font-semibold tracking-[-0.015em] text-fg">
                                 {job.title}
-                                <span className="font-mono text-[0.78rem] font-normal text-accent ml-1.5">{job.company}</span>
+                                <span className="ml-1.5 text-accent">
+                                    @{" "}
+                                    {job.url ? (
+                                        <a
+                                            href={job.url}
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            className="link-underline"
+                                        >
+                                            {job.company}
+                                        </a>
+                                    ) : (
+                                        job.company
+                                    )}
+                                </span>
                             </div>
-                            <div className="font-mono text-[0.68rem] tracking-[0.06em] text-dim mt-1.5 mb-6">{job.date}</div>
+
+                            <div className="font-mono text-[0.68rem] tracking-[0.06em] text-muted mt-1.5">
+                                {job.range}
+                            </div>
+                            <div className="font-text text-[0.82rem] text-muted mt-1 mb-6">
+                                {job.location}
+                            </div>
+
                             <ul className="flex flex-col gap-3">
                                 {job.bullets.map((b, i) => (
                                     <li key={i} className="flex gap-3 text-[0.9rem] leading-[1.7] text-muted">
@@ -125,9 +183,8 @@ export default function Work() {
                             </ul>
                         </div>
                     </div>
-
                 </div>
             </div>
-        </section >
+        </section>
     );
 }
