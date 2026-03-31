@@ -30,7 +30,8 @@ This is my personal portfolio website, where I showcase my journey as a SWE.
 - `app/`: Next.js App Router source (components, layouts, and page)
 - `content/`: MDX files containing the data for About, Work, and Projects sections
 - `lib/`: Utility functions and content loaders using `fs` and `gray-matter`
-- `public/`: Static assets (images, icons, robots.txt, sitemap.xml)
+- `public/`: Static assets (images, icons, robots.txt)
+- `app/sitemap.ts`: Build-time generated sitemap metadata
 - `nginx.conf` & `Dockerfile`: Infrastructure as code for production deployment
 
 ---
@@ -52,6 +53,12 @@ This is my personal portfolio website, where I showcase my journey as a SWE.
 
 2. Install dependencies:
    ```bash
+   npm install
+   ```
+
+   If local binaries are corrupted (for example `next: Permission denied`), reinstall cleanly:
+   ```bash
+   rm -rf node_modules package-lock.json
    npm install
    ```
 
@@ -82,4 +89,3 @@ docker run -p 3000:80 portfolio-v2
 This project is open-source and available under the MIT License. Feel free to use it as a template for your own portfolio!
 
 Created with ❤️ by [Taha Almohamed](https://taljamri.com).
-
