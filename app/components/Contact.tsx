@@ -154,7 +154,7 @@ export default function Contact({ content }: { content: ContactContent }) {
                     </div>
                 </div>
 
-                <div className="mt-6 flex items-center justify-between flex-wrap gap-3 border-t border-line py-1">
+                <div className="mt-6 flex flex-col items-center justify-center gap-2 border-t border-line py-3 text-center md:flex-row md:justify-between md:text-left">
                     <span className="font-mono text-[0.68rem] tracking-[0.04em] text-dim">
                         {footer.copyright}
                     </span>
