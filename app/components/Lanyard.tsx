@@ -1,14 +1,6 @@
 'use client';
-
-// Suppress known Three.js/Rapier deprecation warnings from library internals
-if (typeof window !== 'undefined') {
-    const _warn = console.warn.bind(console);
-    console.warn = (...args: unknown[]) => {
-        const msg = typeof args[0] === 'string' ? args[0] : '';
-        if (msg.includes('THREE.Clock') || msg.includes('deprecated parameters for the initialization function')) return;
-        _warn(...args);
-    };
-}
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react-hooks/immutability */
 
 import { useEffect, useRef, useState } from 'react';
 import { Canvas, extend, useFrame } from '@react-three/fiber';
@@ -235,15 +227,16 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }: BandProps) {
                 </RigidBody>
             </group>
             <mesh ref={band}>
-                <meshLineGeometry />
+                <meshLineGeometry args={[]} />
                 <meshLineMaterial
+                    args={[{ resolution: isMobile ? [1000, 2000] : [1000, 1000] }]}
                     color="white"
                     depthTest={false}
                     resolution={isMobile ? [1000, 2000] : [1000, 1000]}
-                    useMap
-                    map={texture}
-                    repeat={[-4, 1]}
-                    lineWidth={1}
+                        useMap={1}
+                        map={texture}
+                        repeat={[-4, 1]}
+                        lineWidth={1}
                 />
             </mesh>
         </>
