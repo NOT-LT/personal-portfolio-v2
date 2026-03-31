@@ -69,17 +69,39 @@ export interface ProjectsContent {
     projects: ProjectData[];
 }
 
+export interface SiteContent {
+    siteUrl: string;
+    siteName: string;
+    jobTitle: string;
+    description: string;
+    ogImage: string;
+    githubProfileUrl: string;
+    sameAs: string[];
+    socials: Socials;
+}
+
 export interface Socials {
     github: string;
     linkedin: string;
     instagram: string;
 }
 
+export interface ContactFooterContent {
+    eyebrow: string;
+    titleTop: string;
+    titleBottom: string;
+    description: string;
+    primaryCta: { label: string };
+    secondaryCta: { label: string; href: string };
+    signature: string;
+    copyright: string;
+}
+
 export interface ContactContent {
     email: string;
     message: string;
     socials: Socials;
-    footer: { copyright: string };
+    footer: ContactFooterContent;
 }
 
 // ─── Loaders ────────────────────────────────────────────────────────────────
@@ -110,6 +132,7 @@ export function getWorkContent(): WorkContent {
 export function getProjectsContent(): ProjectsContent {
     const projectsDir = path.join(contentDir, 'projects');
     const files = fs.readdirSync(projectsDir).filter(f => f.endsWith('.mdx'));
+    const site = getSiteContent();
 
     const projects: ProjectData[] = files.map(file => {
         const raw = fs.readFileSync(path.join(projectsDir, file), 'utf-8');
@@ -123,16 +146,24 @@ export function getProjectsContent(): ProjectsContent {
     projects.sort((a, b) => a.order - b.order);
 
     return {
-        githubProfileUrl: 'https://github.com/NOT-LT',
+        githubProfileUrl: site.githubProfileUrl,
         projects,
     };
+}
+
+export function getSiteContent(): SiteContent {
+    const raw = fs.readFileSync(path.join(contentDir, 'site.mdx'), 'utf-8');
+    const { data } = matter(raw);
+    return data as SiteContent;
 }
 
 export function getContactContent(): ContactContent {
     const raw = fs.readFileSync(path.join(contentDir, 'contact.mdx'), 'utf-8');
     const { data, content } = matter(raw);
+    const site = getSiteContent();
     return {
-        ...(data as Omit<ContactContent, 'message'>),
+        ...(data as Omit<ContactContent, 'message' | 'socials'>),
+        socials: site.socials,
         message: content.trim(),
     };
 }
