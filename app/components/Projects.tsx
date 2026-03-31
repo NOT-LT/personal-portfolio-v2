@@ -52,10 +52,6 @@ export default function Projects({ content }: { content: ProjectsContent }) {
     }, []);
 
     useEffect(() => {
-        setOffset(prev => Math.min(prev, Math.max(0, projects.length - visible)));
-    }, [visible, projects.length]);
-
-    useEffect(() => {
         const io = new IntersectionObserver(
             entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); }),
             { threshold: 0.1 }
@@ -65,6 +61,7 @@ export default function Projects({ content }: { content: ProjectsContent }) {
     }, []);
 
     const maxOffset = Math.max(0, projects.length - visible);
+    const safeOffset = Math.min(offset, maxOffset);
 
     return (
         <section id="projects" className="py-16 sm:py-25 bg-bg-secondary" ref={sectionRef}>
@@ -81,7 +78,7 @@ export default function Projects({ content }: { content: ProjectsContent }) {
                         <div
                             ref={trackRef}
                             className="flex gap-4 transition-transform duration-500 ease-in-out"
-                            style={{ transform: `translateX(-${offset * cardStep}px)` }}
+                            style={{ transform: `translateX(-${safeOffset * cardStep}px)` }}
                         >
                             {projects.map((p) => (
                                 <SpotlightCard
@@ -129,8 +126,8 @@ export default function Projects({ content }: { content: ProjectsContent }) {
                         <div className="mt-10 flex items-center justify-center gap-4">
                             <button
                                 onClick={() => setOffset(o => Math.max(0, o - 1))}
-                                disabled={offset === 0}
-                                className="w-9 h-9 rounded-full border border-dim flex items-center justify-center text-dim hover:border-accent hover:text-accent transition-[color,border-color] duration-200 disabled:opacity-25 disabled:pointer-events-none"
+                                disabled={safeOffset === 0}
+                                className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-line bg-white/3 text-dim transition-all duration-200 hover:-translate-y-0.5 hover:border-line-hover hover:bg-white/6 hover:text-accent active:translate-y-0 active:scale-[0.97] disabled:pointer-events-none disabled:opacity-25"
                             >
                                 <ChevronLeft />
                             </button>
@@ -142,7 +139,7 @@ export default function Projects({ content }: { content: ProjectsContent }) {
                                         onClick={() => setOffset(i)}
                                         className={[
                                             'rounded-full transition-[width,background-color] duration-250',
-                                            i === offset ? 'w-4 h-1.5 bg-accent' : 'w-1.5 h-1.5 bg-dim hover:bg-muted',
+                                            i === safeOffset ? 'w-4 h-1.5 bg-accent' : 'w-1.5 h-1.5 bg-dim hover:bg-muted',
                                         ].join(' ')}
                                     />
                                 ))}
@@ -150,8 +147,8 @@ export default function Projects({ content }: { content: ProjectsContent }) {
 
                             <button
                                 onClick={() => setOffset(o => Math.min(maxOffset, o + 1))}
-                                disabled={offset === maxOffset}
-                                className="w-9 h-9 rounded-full border border-dim flex items-center justify-center text-dim hover:border-accent hover:text-accent transition-[color,border-color] duration-200 disabled:opacity-25 disabled:pointer-events-none"
+                                disabled={safeOffset === maxOffset}
+                                className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-line bg-white/3 text-dim transition-all duration-200 hover:-translate-y-0.5 hover:border-line-hover hover:bg-white/6 hover:text-accent active:translate-y-0 active:scale-[0.97] disabled:pointer-events-none disabled:opacity-25"
                             >
                                 <ChevronRight />
                             </button>

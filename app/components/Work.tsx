@@ -61,7 +61,7 @@ export default function Work({ content }: { content: WorkContent }) {
                                     key={`${j.company}-${j.date}`}
                                     onClick={() => handleTabClick(i)}
                                     className={[
-                                        'shrink-0 text-left px-4 sm:px-5 py-2.5 sm:py-3 text-[0.8125rem] cursor-pointer whitespace-nowrap transition-[color,background] duration-200',
+                                        'shrink-0 text-left px-4 sm:px-5 py-2.5 sm:py-3 text-[0.8125rem] cursor-pointer whitespace-nowrap transition-[transform,color,background-color,border-color,box-shadow] duration-200 hover:-translate-y-px',
                                         'rounded-full sm:rounded-none',
                                         i === active
                                             ? 'bg-accent/8 text-accent'

@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import Aurora from "./Aurora";
 import Lanyard from "./Lanyard";
 import type { HeroContent } from "@/lib/content";
@@ -20,23 +21,30 @@ export default function Hero({ content }: { content: HeroContent }) {
     const [isDesktop, setIsDesktop] = useState(false);
     const [mounted, setMounted] = useState(false);
     const [isPageLoaded, setIsPageLoaded] = useState(false);
+    const [reduceMotion, setReduceMotion] = useState(false);
 
     useEffect(() => {
         const mq = window.matchMedia("(min-width: 1280px)");
-        setIsDesktop(mq.matches);
-        setMounted(true);
+        const motionMq = window.matchMedia("(prefers-reduced-motion: reduce)");
+        const syncTimer = window.setTimeout(() => {
+            setIsDesktop(mq.matches);
+            setReduceMotion(motionMq.matches);
+            setMounted(true);
+        }, 0);
 
         const handler = (e: MediaQueryListEvent) => setIsDesktop(e.matches);
+        const motionHandler = (e: MediaQueryListEvent) => setReduceMotion(e.matches);
         mq.addEventListener("change", handler);
+        motionMq.addEventListener("change", motionHandler);
 
         const loadTimer = window.setTimeout(() => {
             setIsPageLoaded(true);
-        }, 350);
-
-
+        }, motionMq.matches ? 0 : 350);
 
         return () => {
             mq.removeEventListener("change", handler);
+            motionMq.removeEventListener("change", motionHandler);
+            window.clearTimeout(syncTimer);
             window.clearTimeout(loadTimer);
         };
     }, []);
@@ -46,16 +54,18 @@ export default function Hero({ content }: { content: HeroContent }) {
           
 
             <section className="min-h-auto sm:min-h-0 xl:min-h-screen flex items-start xl:items-center bg-bg pt-28.75 pb-14 sm:pt-24 sm:pb-16 xl:pt-28.75 xl:pb-16 relative overflow-hidden">
-                <div className={`absolute inset-0 z-0 pointer-events-none opacity-[0.55] mask-[linear-gradient(to_bottom,transparent_0%,black_25%,black_70%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,black_25%,black_70%,transparent_100%)] transition-all duration-1500 ease-out ${isPageLoaded ? 'opacity-[0.55] scale-100' : 'opacity-0 scale-110'}`}>
-                    <Aurora
-                        colorStops={["#00e5d0", "#0ea5e9", "#00e5d0"]}
-                        blend={0.7}
-                        amplitude={0.2}
-                        speed={0.9}
-                    />
-                </div>
+                {!reduceMotion && (
+                    <div className={`absolute inset-0 z-0 pointer-events-none opacity-[0.55] mask-[linear-gradient(to_bottom,transparent_0%,black_25%,black_70%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,black_25%,black_70%,transparent_100%)] transition-all duration-1500 ease-out ${isPageLoaded ? 'opacity-[0.55] scale-100' : 'opacity-0 scale-110'}`}>
+                        <Aurora
+                            colorStops={["#00e5d0", "#0ea5e9", "#00e5d0"]}
+                            blend={0.7}
+                            amplitude={0.2}
+                            speed={0.9}
+                        />
+                    </div>
+                )}
 
-                {mounted && isDesktop && (
+                {mounted && isDesktop && !reduceMotion && (
                     <div
                         className={`absolute top-0 bottom-0 right-[max(2rem,calc((100vw-1100px)/2))] w-85 xl:w-115 2xl:w-130 z-1 overflow-hidden pointer-events-auto transition-all duration-1200 delay-400 ease-out ${isPageLoaded
                                 ? "opacity-100 translate-y-0 blur-0 scale-100"
@@ -77,12 +87,13 @@ export default function Hero({ content }: { content: HeroContent }) {
                                         : "opacity-0 translate-y-12 blur-md scale-90"
                                     }`}
                             >
-                                <img
+                                <Image
                                     src={avatar}
                                     alt={name}
                                     width={200}
                                     height={256}
                                     className="w-50 h-64 rounded-full bg-white object-cover object-top"
+                                    priority
                                 />
                             </div>
                         )}
@@ -94,12 +105,13 @@ export default function Hero({ content }: { content: HeroContent }) {
                                         : "opacity-0 translate-x-12 blur-md scale-90 rotate-3"
                                     }`}
                             >
-                                <img
+                                <Image
                                     src={avatar}
                                     alt={name}
                                     width={200}
                                     height={252}
                                     className="w-50 h-63 rounded-full bg-white object-cover object-top"
+                                    priority
                                 />
                             </div>
                         )}
@@ -168,7 +180,7 @@ export default function Hero({ content }: { content: HeroContent }) {
                             <div className="flex items-center gap-1.5 pb-3 flex-wrap sm:max-w-[calc(100%-260px)] xl:max-w-none">
                                 <a
                                     href={ctaPrimary.href}
-                                    className="inline-flex items-center gap-2 font-text text-sm font-medium tracking-[-0.008em] py-2.75 px-6 rounded-full cursor-pointer transition-[opacity,border-color,transform] duration-180 whitespace-nowrap bg-accent border border-none text-bg hover:border-line-hover hover:scale-[1.02]"
+                                    className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full border border-[rgba(94,234,212,0.18)] bg-[#01CAB8] px-6 py-2.75 font-text text-sm font-medium tracking-[-0.008em] whitespace-nowrap text-bg shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_14px_34px_rgba(0,229,208,0.14)] transition-all duration-200 hover:-translate-y-0.5 hover:border-[rgba(94,234,212,0.26)] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.22),0_18px_42px_rgba(0,229,208,0.18)] active:translate-y-0 active:scale-[0.985] [html[data-theme='light']_&]:border-[rgba(8,145,178,0.16)] [html[data-theme='light']_&]:bg-[#0891B2] [html[data-theme='light']_&]:text-white [html[data-theme='light']_&]:shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_14px_34px_rgba(14,165,233,0.14)] [html[data-theme='light']_&]:hover:border-[rgba(8,145,178,0.22)] [html[data-theme='light']_&]:hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_18px_42px_rgba(14,165,233,0.18)]"
                                 >
                                     {ctaPrimary.label}
                                     <svg
@@ -178,13 +190,14 @@ export default function Hero({ content }: { content: HeroContent }) {
                                         stroke="currentColor"
                                         strokeWidth="2.2"
                                         viewBox="0 0 24 24"
+                                        className="transition-transform duration-200 group-hover:translate-x-0.5"
                                     >
                                         <path d="M5 12h14M12 5l7 7-7 7" />
                                     </svg>
                                 </a>
                                 <a
                                     href={ctaSecondary.href}
-                                    className="inline-flex items-center gap-2 font-text text-sm font-medium tracking-[-0.008em] py-2.75 px-6 rounded-full cursor-pointer transition-[opacity,border-color,transform] duration-180 whitespace-nowrap bg-transparent border border-faint text-fg hover:border-line-hover hover:scale-[1.02]"
+                                    className="inline-flex items-center gap-2 rounded-full border border-faint bg-transparent px-6 py-2.75 font-text text-sm font-medium tracking-[-0.008em] text-fg whitespace-nowrap transition-all duration-200 hover:-translate-y-0.5 hover:border-line-hover hover:bg-white/3 active:translate-y-0 active:scale-[0.985] [html[data-theme='light']_&]:border-[rgba(8,145,178,0.16)] [html[data-theme='light']_&]:hover:border-[rgba(8,145,178,0.24)] [html[data-theme='light']_&]:hover:bg-white/60"
                                 >
                                     {ctaSecondary.label}
                                 </a>

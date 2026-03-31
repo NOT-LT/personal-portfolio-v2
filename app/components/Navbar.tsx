@@ -8,11 +8,16 @@ export default function Navbar() {
     const [theme, setTheme] = useState<"dark" | "light">("dark");
 
     useEffect(() => {
-        // Check for saved theme preference or default to dark
-        const savedTheme = localStorage.getItem("theme") as "dark" | "light" | null;
-        const preferredTheme = savedTheme || "dark";
-        setTheme(preferredTheme);
-        document.documentElement.setAttribute("data-theme", preferredTheme);
+        const savedTheme = localStorage.getItem("theme-mode") as "dark" | "light" | null;
+        const documentTheme = document.documentElement.getAttribute("data-theme");
+        const preferredTheme = savedTheme
+            || (documentTheme === "dark" || documentTheme === "light" ? documentTheme : null)
+            || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+
+        const restoreTimer = window.setTimeout(() => {
+            setTheme(preferredTheme);
+            document.documentElement.setAttribute("data-theme", preferredTheme);
+        }, 0);
 
         const onScroll = () => setScrolled(window.scrollY > 24);
         window.addEventListener('scroll', onScroll, { passive: true });
@@ -24,6 +29,7 @@ export default function Navbar() {
         return () => {
             window.removeEventListener('scroll', onScroll);
             window.clearTimeout(loadTimer);
+            window.clearTimeout(restoreTimer);
         };
     }, []);
 
@@ -31,12 +37,12 @@ export default function Navbar() {
         const newTheme = theme === "dark" ? "light" : "dark";
         setTheme(newTheme);
         document.documentElement.setAttribute("data-theme", newTheme);
-        localStorage.setItem("theme", newTheme);
+        localStorage.setItem("theme-mode", newTheme);
     };
 
     return (
         <>
-            <nav className={`fixed left-1/2 -translate-x-1/2 z-100 w-[calc(100%-48px)] bg-surface/60 backdrop-blur-lg border border-line rounded-full transition-all duration-700 ease-out ${scrolled ? 'top-2 h-10 max-w-120' : 'top-4 h-13 max-w-(--max-w)'} ${isPageLoaded ? 'opacity-100 translate-y-0 blur-0 scale-100' : 'opacity-0 -translate-y-8 blur-sm scale-95'}`}>
+            <nav className={`fixed left-1/2 -translate-x-1/2 z-100 w-[calc(100%-48px)] bg-surface/60 backdrop-blur-lg border border-line rounded-full transition-all duration-500 ease-out ${scrolled ? 'top-2 h-10 max-w-120' : 'top-4 h-13 max-w-(--max-w)'} ${isPageLoaded ? 'opacity-100 translate-y-0 blur-0 scale-100' : 'opacity-0 -translate-y-8 blur-sm scale-95'}`}>
                 <div className="px-3 h-full flex items-center justify-between relative">
                     <a href="#" className="text-fg hover:text-accent transition-colors duration-180 ml-0 outline-none focus:outline-none"
                         onClick={(e) => { e.preventDefault(); window.location.reload(); }}>
