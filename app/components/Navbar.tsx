@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import { SunIcon, MoonIcon } from "./icons";
 
 export default function Navbar() {
     const [open, setOpen] = useState(false);
@@ -66,45 +67,26 @@ export default function Navbar() {
                         {/* Theme toggle button */}
                         <button
                             onClick={toggleTheme}
-                            className="hidden sm:flex items-center justify-center w-8 h-8 rounded-full text-muted hover:text-fg hover:bg-surface-2 transition-all duration-300 hover:scale-110 active:scale-95"
-                            aria-label="Toggle theme"
+                            className="hidden sm:flex items-center justify-center w-8 h-8 rounded-full text-muted hover:text-fg hover:bg-surface-2 transition-all duration-300 hover:scale-110 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+                            aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
                         >
                             <div className="relative w-4.5 h-4.5">
-                                <svg
-                                    width="18"
-                                    height="18"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    viewBox="0 0 24 24"
-                                    className={`absolute inset-0 transition-all duration-500 ${theme === "dark" ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 rotate-90 scale-0'}`}
-                                >
-                                    <circle cx="12" cy="12" r="5" />
-                                    <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
-                                </svg>
-                                <svg
-                                    width="18"
-                                    height="18"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    viewBox="0 0 24 24"
-                                    className={`absolute inset-0 transition-all duration-500 ${theme === "light" ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-90 scale-0'}`}
-                                >
-                                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-                                </svg>
+                                <div className={`absolute inset-0 transition-all duration-500 ${theme === "dark" ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 rotate-90 scale-0'}`}>
+                                    <SunIcon />
+                                </div>
+                                <div className={`absolute inset-0 transition-all duration-500 ${theme === "light" ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-90 scale-0'}`}>
+                                    <MoonIcon />
+                                </div>
                             </div>
                         </button>
 
                         {/* Hamburger button */}
                         <button
                             onClick={() => setOpen(!open)}
-                            className="sm:hidden flex flex-col justify-center items-center w-8 h-8 gap-1.25 text-fg"
+                            className="sm:hidden flex flex-col justify-center items-center w-8 h-8 gap-1.25 text-fg focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface rounded-full"
                             aria-label="Toggle menu"
+                            aria-expanded={open}
+                            aria-controls="mobile-menu"
                         >
                             <span className={`block h-px w-5 bg-current transition-all duration-200 origin-center ${open ? "rotate-45 translate-y-1.75" : ""}`} />
                             <span className={`block h-px w-5 bg-current transition-all duration-200 ${open ? "opacity-0" : ""}`} />
@@ -115,7 +97,12 @@ export default function Navbar() {
             </nav>
 
             {/* Mobile dropdown */}
-            <div className={`sm:hidden fixed left-1/2 -translate-x-1/2 z-99 w-[calc(100%-48px)] bg-surface/90 backdrop-blur-lg border border-line rounded-2xl overflow-hidden transition-all duration-300 ${scrolled ? 'top-13.5' : 'top-20'} ${open ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2 pointer-events-none"}`}>
+            <div
+                id="mobile-menu"
+                className={`sm:hidden fixed left-1/2 -translate-x-1/2 z-99 w-[calc(100%-48px)] bg-surface/90 backdrop-blur-lg border border-line rounded-2xl overflow-hidden transition-all duration-300 ${scrolled ? 'top-13.5' : 'top-20'} ${open ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2 pointer-events-none"}`}
+                role="menu"
+                aria-label="Navigation menu"
+            >
                 <ul className="flex flex-col list-none p-2">
                     <li><a href="#about" onClick={() => setOpen(false)} className="block px-4 py-3 text-sm text-muted hover:text-fg hover:bg-surface-2 rounded-xl transition-colors duration-180">About</a></li>
                     <li><a href="#work" onClick={() => setOpen(false)} className="block px-4 py-3 text-sm text-muted hover:text-fg hover:bg-surface-2 rounded-xl transition-colors duration-180">Work</a></li>
@@ -129,33 +116,12 @@ export default function Navbar() {
                             <span>Theme</span>
                             <span className="flex items-center gap-2">
                                 <div className="relative w-4 h-4">
-                                    <svg
-                                        width="16"
-                                        height="16"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeWidth="2"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        viewBox="0 0 24 24"
-                                        className={`absolute inset-0 transition-all duration-500 ${theme === "dark" ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 rotate-90 scale-0'}`}
-                                    >
-                                        <circle cx="12" cy="12" r="5" />
-                                        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
-                                    </svg>
-                                    <svg
-                                        width="16"
-                                        height="16"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeWidth="2"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        viewBox="0 0 24 24"
-                                        className={`absolute inset-0 transition-all duration-500 ${theme === "light" ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-90 scale-0'}`}
-                                    >
-                                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-                                    </svg>
+                                    <div className={`absolute inset-0 transition-all duration-500 ${theme === "dark" ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 rotate-90 scale-0'}`}>
+                                        <SunIcon size={16} />
+                                    </div>
+                                    <div className={`absolute inset-0 transition-all duration-500 ${theme === "light" ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-90 scale-0'}`}>
+                                        <MoonIcon size={16} />
+                                    </div>
                                 </div>
                                 <span className="transition-opacity duration-300">
                                     {theme === "dark" ? "Light" : "Dark"}

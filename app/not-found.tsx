@@ -5,6 +5,7 @@ import { useEffect, useState, useRef } from 'react';
 
 export default function NotFound() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [isTransitionSmooth, setIsTransitionSmooth] = useState(false);
   const isInteracting = useRef(false);
   const rafId = useRef<number | null>(null);
 
@@ -28,6 +29,7 @@ export default function NotFound() {
 
     const handleMouseTouch = (e: MouseEvent | TouchEvent) => {
       isInteracting.current = true;
+      setIsTransitionSmooth(true);
 
       let clientX = 0;
       let clientY = 0;
@@ -53,6 +55,7 @@ export default function NotFound() {
       clearTimeout(idleTimeout);
       idleTimeout = setTimeout(() => {
         isInteracting.current = false;
+        setIsTransitionSmooth(false);
       }, 2500);
     };
 
@@ -116,7 +119,7 @@ export default function NotFound() {
             className="font-display text-[9rem] sm:text-[12rem] md:text-[18rem] font-bold leading-none tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-fg via-fg/90 to-surface-2 select-none drop-shadow-2xl"
             style={{
               transform: `rotateX(${-mousePos.y * 15}deg) rotateY(${mousePos.x * 15}deg) translateZ(50px)`,
-              transition: isInteracting.current ? 'transform 0.1s ease-out' : 'transform 1s linear' // Smoother transition when auto-animating
+              transition: isTransitionSmooth ? 'transform 0.1s ease-out' : 'transform 1s linear'
             }}
           >
             404
@@ -135,10 +138,10 @@ export default function NotFound() {
           style={{ transform: `translate(${mousePos.x * -10}px, ${mousePos.y * -10}px)` }}
         >
           <h2 className="font-display text-2xl md:text-3xl font-semibold text-fg mb-4 tracking-tight px-4">
-            Oops! Page not found.
+            Oops! Page not found
           </h2>
           <p className="font-text text-muted text-[1.05rem] md:text-lg mb-10 max-w-md mx-auto leading-relaxed px-6">
-            We couldn't find the page you were looking for.
+            We could not find the page you were looking for.
           </p>
 
           <Link href="/" className="group relative inline-flex items-center gap-3 overflow-hidden rounded-full border border-[rgba(94,234,212,0.18)] bg-[#01CAB8] px-8 py-3.5 font-text text-sm font-semibold text-bg shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_14px_34px_rgba(0,229,208,0.14)] transition-all duration-300 hover:-translate-y-1 hover:border-[rgba(94,234,212,0.26)] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.22),0_18px_42px_rgba(0,229,208,0.25)] active:translate-y-0 active:scale-[0.985] [html[data-theme='light']_&]:border-[rgba(8,145,178,0.16)] [html[data-theme='light']_&]:bg-[#0891B2] [html[data-theme='light']_&]:text-white [html[data-theme='light']_&]:shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_14px_34px_rgba(14,165,233,0.14)] [html[data-theme='light']_&]:hover:border-[rgba(8,145,178,0.22)] [html[data-theme='light']_&]:hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_18px_42px_rgba(14,165,233,0.22)]">
