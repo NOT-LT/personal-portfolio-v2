@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useState, useRef } from 'react';
 
+
 export default function NotFound() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isTransitionSmooth, setIsTransitionSmooth] = useState(false);
@@ -144,7 +145,7 @@ export default function NotFound() {
             We could not find the page you were looking for.
           </p>
 
-          <Link href="/" className="group relative inline-flex items-center gap-3 overflow-hidden rounded-full border border-[rgba(94,234,212,0.18)] bg-[#01CAB8] px-8 py-3.5 font-text text-sm font-semibold text-bg shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_14px_34px_rgba(0,229,208,0.14)] transition-all duration-300 hover:-translate-y-1 hover:border-[rgba(94,234,212,0.26)] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.22),0_18px_42px_rgba(0,229,208,0.25)] active:translate-y-0 active:scale-[0.985] [html[data-theme='light']_&]:border-[rgba(8,145,178,0.16)] [html[data-theme='light']_&]:bg-[#0891B2] [html[data-theme='light']_&]:text-white [html[data-theme='light']_&]:shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_14px_34px_rgba(14,165,233,0.14)] [html[data-theme='light']_&]:hover:border-[rgba(8,145,178,0.22)] [html[data-theme='light']_&]:hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_18px_42px_rgba(14,165,233,0.22)]">
+          <Link href="/" className="group btn-primary gap-3 px-8 py-3.5 font-semibold">
             <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" className="transition-transform duration-300 group-hover:-translate-x-1">
               <path d="M10 19l-7-7m0 0l7-7m-7 7h18" strokeLinecap="round" strokeLinejoin="round" />
             </svg>

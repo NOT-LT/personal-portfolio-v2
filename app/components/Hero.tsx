@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Aurora from "./Aurora";
 import Lanyard from "./Lanyard";
+
 import type { HeroContent } from "@/lib/content";
 
 export default function Hero({ content }: { content: HeroContent }) {
@@ -180,7 +181,7 @@ export default function Hero({ content }: { content: HeroContent }) {
                             <div className="flex items-center gap-1.5 pb-3 flex-wrap sm:max-w-[calc(100%-260px)] xl:max-w-none">
                                 <a
                                     href={ctaPrimary.href}
-                                    className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full border border-[rgba(94,234,212,0.18)] bg-[#01CAB8] px-6 py-2.75 font-text text-sm font-medium tracking-[-0.008em] whitespace-nowrap text-bg shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_14px_34px_rgba(0,229,208,0.14)] transition-all duration-200 hover:-translate-y-0.5 hover:border-[rgba(94,234,212,0.26)] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.22),0_18px_42px_rgba(0,229,208,0.18)] active:translate-y-0 active:scale-[0.985] [html[data-theme='light']_&]:border-[rgba(8,145,178,0.16)] [html[data-theme='light']_&]:bg-[#0891B2] [html[data-theme='light']_&]:text-white [html[data-theme='light']_&]:shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_14px_34px_rgba(14,165,233,0.14)] [html[data-theme='light']_&]:hover:border-[rgba(8,145,178,0.22)] [html[data-theme='light']_&]:hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_18px_42px_rgba(14,165,233,0.18)]"
+                                    className="group btn-primary"
                                 >
                                     {ctaPrimary.label}
                                     <svg
@@ -197,7 +198,7 @@ export default function Hero({ content }: { content: HeroContent }) {
                                 </a>
                                 <a
                                     href={ctaSecondary.href}
-                                    className="inline-flex items-center gap-2 rounded-full border border-faint bg-transparent px-6 py-2.75 font-text text-sm font-medium tracking-[-0.008em] text-fg whitespace-nowrap transition-all duration-200 hover:-translate-y-0.5 hover:border-line-hover hover:bg-white/3 active:translate-y-0 active:scale-[0.985] [html[data-theme='light']_&]:border-[rgba(8,145,178,0.16)] [html[data-theme='light']_&]:hover:border-[rgba(8,145,178,0.24)] [html[data-theme='light']_&]:hover:bg-white/60"
+                                    className="btn-secondary"
                                 >
                                     {ctaSecondary.label}
                                 </a>

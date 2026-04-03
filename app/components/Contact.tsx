@@ -6,6 +6,7 @@ import { getGsap } from "@/lib/gsap";
 import { GithubIconLarge, LinkedInIcon, InstagramIcon, ArrowIcon } from "./icons";
 import type { ContactContent } from "@/lib/content";
 
+
 const grainStyle = {
     backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="140" height="140" viewBox="0 0 140 140"%3E%3Cfilter id="noise"%3E%3CfeTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="140" height="140" filter="url(%23noise)" opacity=".95"/%3E%3C/svg%3E")',
 };
@@ -104,14 +105,14 @@ export default function Contact({ content }: { content: ContactContent }) {
                         <div data-footer-seq className="mt-9 flex flex-wrap items-center justify-center gap-3">
                             <a
                                 href={`mailto:${email}`}
-                                className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full border border-[rgba(94,234,212,0.18)] bg-[#01CAB8] px-6 py-3 text-sm font-medium text-bg shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_18px_40px_rgba(0,229,208,0.16)] transition-all duration-200 hover:-translate-y-0.5 hover:border-[rgba(94,234,212,0.26)] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.24),0_20px_44px_rgba(0,229,208,0.18)] active:translate-y-0 active:scale-[0.985] [html[data-theme='light']_&]:border-[rgba(8,145,178,0.16)] [html[data-theme='light']_&]:bg-[#0891B2] [html[data-theme='light']_&]:text-white [html[data-theme='light']_&]:shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_18px_40px_rgba(14,165,233,0.14)] [html[data-theme='light']_&]:hover:border-[rgba(8,145,178,0.22)] [html[data-theme='light']_&]:hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_20px_44px_rgba(14,165,233,0.18)]"
+                                className="group btn-primary"
                             >
                                 {footer.primaryCta.label}
                                 <ArrowIcon />
                             </a>
                             <a
                                 href={footer.secondaryCta.href}
-                                className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-transparent px-6 py-3 text-sm font-medium text-fg backdrop-blur-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-white/18 hover:bg-white/4 active:translate-y-0 active:scale-[0.985] [html[data-theme='light']_&]:border-[rgba(8,145,178,0.18)] [html[data-theme='light']_&]:hover:border-[rgba(8,145,178,0.24)] [html[data-theme='light']_&]:hover:bg-white/70"
+                                className="btn-secondary"
                             >
                                 {footer.secondaryCta.label}
                             </a>
@@ -125,7 +126,7 @@ export default function Contact({ content }: { content: ContactContent }) {
                                     aria-label={social.label}
                                     target="_blank"
                                     rel="noreferrer"
-                                    className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/12 bg-white/4 text-white/74 backdrop-blur-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-white/18 hover:bg-white/7 hover:text-fg active:translate-y-0 active:scale-[0.97] [html[data-theme='light']_&]:border-[rgba(8,145,178,0.16)] [html[data-theme='light']_&]:bg-white/78 [html[data-theme='light']_&]:text-[#52525b] [html[data-theme='light']_&]:hover:text-[#18181b]"
+                                    className="btn-icon"
                                 >
                                     {social.icon}
                                 </a>
