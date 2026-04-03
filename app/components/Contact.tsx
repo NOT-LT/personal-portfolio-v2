@@ -79,14 +79,14 @@ export default function Contact({ content }: { content: ContactContent }) {
             <div className="max-w-275 mx-auto px-6">
                 <div
                     data-footer-shell
-                    className="footer-shell relative isolate overflow-hidden rounded-[2.4rem] border border-line px-6 py-10 sm:px-10 sm:py-14 lg:px-14 lg:py-16"
+                    className="footer-shell relative isolate overflow-hidden rounded-[2.4rem] border border-line px-6 py-10 sm:px-10 sm:py-14 lg:px-14 lg:py-16 [-webkit-mask-image:-webkit-radial-gradient(white,black)]"
                 >
                     <div className="footer-gradient" />
                     <div data-footer-orb="left" className="absolute -left-14 top-10 h-48 w-48 rounded-full bg-accent/20 blur-[90px]" />
                     <div data-footer-orb="right" className="absolute -right-18 -bottom-6 h-60 w-60 rounded-full bg-sky-400/16 blur-[120px]" />
                     <div className="footer-top-glow absolute inset-x-12 top-0 h-px" />
-                    <div className="absolute inset-0 opacity-[0.18] mix-blend-soft-light" style={grainStyle} />
-                    <div className="footer-overlay absolute inset-0" />
+                    <div className="absolute inset-0 rounded-[inherit] opacity-[0.18] mix-blend-soft-light" style={grainStyle} />
+                    <div className="footer-overlay absolute inset-0 rounded-[inherit]" />
 
                     <div className="relative z-10 mx-auto max-w-3xl text-center">
                         <span data-footer-seq className="font-mono text-[0.72rem] font-medium tracking-[0.14em] uppercase text-accent block mb-4">
