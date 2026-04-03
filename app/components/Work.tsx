@@ -1,5 +1,6 @@
 "use client";
-import { useState, useEffect, useMemo, useRef } from 'react';
+import { useState, useMemo, useRef } from 'react';
+import { useRevealOnScroll } from '@/app/hooks/useRevealOnScroll';
 import type { WorkContent } from '@/lib/content';
 
 export default function Work({ content }: { content: WorkContent }) {
@@ -13,15 +14,7 @@ export default function Work({ content }: { content: WorkContent }) {
     const [active, setActive] = useState(0);
     const [animKey, setAnimKey] = useState(0);
     const sectionRef = useRef<HTMLElement>(null);
-
-    useEffect(() => {
-        const io = new IntersectionObserver(
-            entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); }),
-            { threshold: 0.1 }
-        );
-        sectionRef.current?.querySelectorAll('.reveal').forEach(el => io.observe(el));
-        return () => io.disconnect();
-    }, []);
+    useRevealOnScroll(sectionRef);
 
     const handleTabClick = (i: number) => {
         if (i !== active) {
